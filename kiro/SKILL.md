@@ -12,20 +12,65 @@ Generate a draw.io (.drawio) XML file representing an AWS architecture diagram.
 - **UI/Frontend on the LEFT** (users access from left side)
 - **Data sources / external systems on the RIGHT**
 - Use horizontal lanes for parallel paths (top lane, bottom lane)
-- Minimum 150px horizontal spacing, 200px vertical between lanes
+- **Minimum 220px horizontal spacing** between icons (to leave room for edge labels)
+- **Minimum 250px vertical spacing** between lanes (so vertical edges don't crowd)
+- Secondary/auxiliary services (monitoring, DLQ, error paths) go BELOW the main flow with 280px+ vertical gap
 
 ### Canvas
 - Large canvas: `pageWidth="2400" pageHeight="1400"` minimum
 - Set `dx="2800" dy="1600"` for proper viewport
+- Always include a title block as the first element after the background:
+```xml
+<mxCell value="&lt;b&gt;Diagram Title&lt;/b&gt;&lt;br&gt;Author | Date | Version" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
+  <mxGeometry x="40" y="30" width="420" height="60" as="geometry" />
+</mxCell>
+```
 
 ### Icon Style
 - Icons are from draw.io's built-in `mxgraph.aws4` stencil library — the **official AWS Architecture Icons** (https://aws.amazon.com/architecture/icons/, updated quarterly)
 - Icon size: **78x78px** for main services, **65x65px** for secondary
 - Use `sketch=0` on all icons
 - Use `strokeColor=#ffffff` on all AWS service icons
-- Use `strokeWidth=2` on all edges
-- Edge style: `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;`
 - Font size: **12px** for labels
+
+### Edge Style — CRITICAL FOR CLEAN DIAGRAMS
+
+**Base edge style (all edges):**
+```
+edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;
+```
+
+**Rules for edge labels:**
+- Keep labels SHORT (1-2 words max). Use icon labels for detail, not edge labels.
+- On horizontal edges: position label ABOVE the line using `verticalAlign=bottom;` in the edge style
+- On vertical edges: position label to the LEFT using `align=right;` in the edge style
+- Always add `labelBackgroundColor=#F5F5F5;` so labels don't overlap lines
+- For edges WITHOUT labels: omit the `value` attribute entirely (don't use `value=""`)
+
+**Edge label positioning (prevents overlap with icons):**
+```xml
+<mxCell value="Label" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;labelBackgroundColor=#F5F5F5;fontSize=11;" edge="1" source="a" target="b" parent="1">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+```
+
+**For edges that go to services ABOVE or BELOW the main flow:**
+- Use explicit exit/entry points to control routing:
+  - Exit bottom: `exitX=0.5;exitY=1;exitDx=0;exitDy=0;`
+  - Enter top: `entryX=0.5;entryY=0;entryDx=0;entryDy=0;`
+  - Exit top: `exitX=0.5;exitY=0;exitDx=0;exitDy=0;`
+  - Enter bottom: `entryX=0.5;entryY=1;entryDx=0;entryDy=0;`
+- This prevents draw.io from routing lines through other icons
+
+**Edge types:**
+- Solid black (`strokeWidth=2`): primary data flow
+- Dashed black (`strokeWidth=2;dashed=1;`): optional/async path
+- Dashed red (`strokeWidth=2;dashed=1;strokeColor=#DD344C;`): error path
+
+**When NOT to label edges:**
+- If the flow is obvious from context (e.g., Lambda → DynamoDB doesn't need "Write")
+- If the icon labels already explain the relationship
+- Prefer fewer, more meaningful labels over labeling every edge
 
 ### Two Icon Patterns — CRITICAL
 
@@ -61,11 +106,13 @@ Generate a draw.io (.drawio) XML file representing an AWS architecture diagram.
 - **NO colored backgrounds** on group boxes — always `fillColor=none`
 
 ### PNG Export Background Fix
-Place a light gray rectangle covering the entire diagram as the bottom-most element:
+Place a full-canvas rectangle as the FIRST element (lowest z-order):
+```xml
+<mxCell value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=none;" vertex="1" parent="1">
+  <mxGeometry x="0" y="0" width="2400" height="1400" as="geometry" />
+</mxCell>
 ```
-rounded=1;whiteSpace=wrap;fillColor=#F5F5F5;strokeColor=#E0E0E0;arcSize=2;
-```
-This prevents black background on areas outside groups when exporting to PNG.
+This prevents black background on PNG export. Use `strokeColor=none` (not E0E0E0).
 
 ### Multi-page Diagrams
 For complex architectures, use multiple pages (tabs) in one .drawio file:
@@ -79,15 +126,9 @@ For complex architectures, use multiple pages (tabs) in one .drawio file:
 - Page 1: High-level overview (service-level icons only)
 - Page 2+: Detail views (resource-level icons, subnet layouts, etc.)
 
-### Legend / Title Block
-Place in top-left corner of every diagram, inside the background rectangle:
-```xml
-<mxCell value="&lt;b&gt;Diagram Title&lt;/b&gt;&lt;br&gt;Author | Date | Version" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
-  <mxGeometry x="40" y="40" width="300" height="50" as="geometry" />
-</mxCell>
-```
-Optional color legend for edge types:
-- Solid line: data flow
+### Edge Legend (optional, for complex diagrams)
+Place below the title block if the diagram has multiple edge types:
+- Solid line: primary data flow
 - Dashed line: optional/async
 - Red dashed: error path
 
