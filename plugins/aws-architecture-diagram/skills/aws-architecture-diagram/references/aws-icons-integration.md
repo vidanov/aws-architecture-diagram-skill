@@ -54,3 +54,19 @@ fillColor: `#232F3E` | strokeColor: `#ffffff`
 ```
 shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.sqs
 ```
+
+## CloudWatch Resource-level Icons
+fillColor: `#E7157B` | strokeColor: `none`
+
+| shape suffix | Display Name |
+|-------------|-------------|
+| `alarm` | CloudWatch Alarm |
+| `rule` | CloudWatch Rule |
+| `event_time_based` | Time-Based Event |
+| `event_event_based` | Event-Based Event |
+| `log_group` | Log Group |
+| `logs_insights` | Logs Insights |
+| `metrics_insights` | Metrics Insights |
+| `synthetics` | CloudWatch Synthetics |
+| `evidently` | CloudWatch Evidently |
+| `cloudwatch_rum` | CloudWatch RUM |

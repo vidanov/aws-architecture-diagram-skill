@@ -49,3 +49,12 @@ fillColor: `#ED7100` | strokeColor: `none`
 | `container_registry_image` | Container Image |
 | `application` | Beanstalk Application |
 | `deployment` | Deployment |
+| `auto_scaling_group` | Auto Scaling Group |
+| `elastic_ip_address` | Elastic IP |
+| `ami` | AMI |
+| `rescue` | Rescue |
+| `instance_with_cloudwatch2` | Instance with CloudWatch |
+| `db_on_instance2` | DB on Instance |
+| `mac_instance` | Mac Instance |
+| `inferentia` | Inferentia |
+| `trainium_instance` | Trainium |

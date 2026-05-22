@@ -67,6 +67,30 @@ rounded=1;whiteSpace=wrap;fillColor=#F5F5F5;strokeColor=#E0E0E0;arcSize=2;
 ```
 This prevents black background on areas outside groups when exporting to PNG.
 
+### Multi-page Diagrams
+For complex architectures, use multiple pages (tabs) in one .drawio file:
+```xml
+<mxfile>
+  <diagram id="overview" name="Overview">...</diagram>
+  <diagram id="networking" name="Networking Detail">...</diagram>
+  <diagram id="data-flow" name="Data Flow">...</diagram>
+</mxfile>
+```
+- Page 1: High-level overview (service-level icons only)
+- Page 2+: Detail views (resource-level icons, subnet layouts, etc.)
+
+### Legend / Title Block
+Place in top-left corner of every diagram, inside the background rectangle:
+```xml
+<mxCell value="&lt;b&gt;Diagram Title&lt;/b&gt;&lt;br&gt;Author | Date | Version" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
+  <mxGeometry x="40" y="40" width="300" height="50" as="geometry" />
+</mxCell>
+```
+Optional color legend for edge types:
+- Solid line: data flow
+- Dashed line: optional/async
+- Red dashed: error path
+
 ### File Splitting
 Since draw.io XML can be large, split creation across multiple tool calls:
 1. Header + left side (frontend, delivery layer)
