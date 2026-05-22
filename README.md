@@ -14,6 +14,28 @@ Generates production-quality `.drawio` files using official AWS Architecture Ico
 
 ## Installation
 
+### Claude Code (Plugin — recommended)
+
+```bash
+/plugin marketplace add vidanov/aws-architecture-diagram-skill
+/plugin install aws-architecture-diagram@vidanov-skills
+```
+
+Then use it:
+```
+/aws-architecture-diagram:aws-architecture-diagram
+```
+
+Or just ask naturally — the skill activates automatically when you mention AWS architecture diagrams.
+
+### Claude Code (Manual)
+
+```bash
+mkdir -p ~/.claude/skills/aws-architecture-diagram
+cp claude/SKILL.md ~/.claude/skills/aws-architecture-diagram/SKILL.md
+cp -r references ~/.claude/skills/aws-architecture-diagram/references
+```
+
 ### Kiro CLI
 
 ```bash
@@ -26,20 +48,6 @@ cp -r references ~/.kiro/skills/aws-architecture-diagram/references
 mkdir -p .kiro/skills/aws-architecture-diagram
 cp kiro/SKILL.md .kiro/skills/aws-architecture-diagram/SKILL.md
 cp -r references .kiro/skills/aws-architecture-diagram/references
-```
-
-### Claude Code
-
-```bash
-# Global (all projects)
-mkdir -p ~/.claude/skills/aws-architecture-diagram
-cp claude/SKILL.md ~/.claude/skills/aws-architecture-diagram/SKILL.md
-cp -r references ~/.claude/skills/aws-architecture-diagram/references
-
-# Per-project
-mkdir -p .claude/skills/aws-architecture-diagram
-cp claude/SKILL.md .claude/skills/aws-architecture-diagram/SKILL.md
-cp -r references .claude/skills/aws-architecture-diagram/references
 ```
 
 ## Usage
