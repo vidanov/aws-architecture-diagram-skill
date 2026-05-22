@@ -89,6 +89,24 @@ These `resIcon` values do NOT render in draw.io — avoid them:
 - `mxgraph.aws4.dynamodb_stream` → use `mxgraph.aws4.dynamodb` with label
 - `mxgraph.aws4.general_saml_token` → use `mxgraph.aws4.traditional_server`
 
+## How This Compares
+
+| Solution | Type | Output | Editable | Zero-deps | Verified Icons |
+|----------|------|--------|----------|-----------|----------------|
+| **This skill** | Agent Skill | `.drawio` | ✅ | ✅ | ✅ |
+| [jgraph/drawio-mcp](https://github.com/jgraph/drawio-mcp) | MCP Server + Skill | `.drawio` | ✅ | ❌ (MCP) | ❌ |
+| [awslabs/aws-diagram-mcp-server](https://pypi.org/project/awslabs.aws-diagram-mcp-server/) | MCP Server (Python) | PNG | ❌ | ❌ (Python+GraphViz) | N/A |
+| [awslabs/diagram-as-code](https://github.com/awslabs/diagram-as-code) | CLI (Go) | PNG/SVG | ❌ | ❌ (Go binary) | N/A |
+| [carlosmgv02/diagram-ai-generator](https://github.com/carlosmgv02/diagram-ai-generator) | MCP Server | Multi-cloud | ❌ | ❌ (MCP) | ❌ |
+| [clouda.ai](https://clouda.ai/) | SaaS | PNG | ❌ | N/A | N/A |
+
+**Key differentiators:**
+- **Zero dependencies** — just a markdown file, no MCP server, no Python, no GraphViz
+- **Editable output** — native `.drawio` XML you can open and modify in draw.io
+- **Verified icon catalog** — documents which `mxgraph.aws4.*` icons actually render vs. silently break
+- **Opinionated layout** — left-to-right flow with consistent spacing (not random placement)
+- **Dual platform** — works in both Kiro CLI and Claude Code
+
 ## License
 
 MIT
