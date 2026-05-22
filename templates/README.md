@@ -8,6 +8,9 @@ Ready-to-use draw.io templates following the skill's style rules. Use these as s
 |----------|---------|---------------|
 | `serverless-rest-api.drawio` | Serverless API | CloudFront → API Gateway → Lambda → DynamoDB + S3 + Cognito |
 | `event-driven-processing.drawio` | Event-Driven | EventBridge → SQS/SNS/Step Functions → Lambda → DynamoDB |
+| `static-website.drawio` | Static Hosting | Route 53 → CloudFront → S3 + ACM + WAF |
+| `three-tier-web-app.drawio` | 3-Tier Web | Route 53 → ALB → EC2 (Multi-AZ) → RDS (Primary/Standby) + VPC/Subnets |
+| `vpc-networking.drawio` | VPC Network | Internet → IGW → NAT Gateways → EC2 in Private Subnets (Multi-AZ) |
 
 ## How to Use
 
