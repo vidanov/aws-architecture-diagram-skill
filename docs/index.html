@@ -220,6 +220,37 @@
         .feature h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
         .feature p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
 
+        /* Examples */
+        .examples { padding: 48px 0; }
+        .examples h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 24px; }
+        .example-card {
+            margin-bottom: 32px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .example-card img { display: block; width: 100%; height: auto; }
+        .example-meta {
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+        }
+        .example-meta .prompt {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+        .example-meta a {
+            font-size: 0.82rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .example-meta a:hover { text-decoration: underline; }
+
         /* Roadmap */
         .roadmap { padding: 40px 0 60px; }
         .roadmap h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 16px; }
@@ -376,6 +407,34 @@
         <p>The current output is good. It's not perfect. I still believe I can push it further.</p>
         <p>The next step is multiple diagram styles for the same architecture. A technical diagram for the engineering team. A simplified view for business stakeholders. A version that follows a specific company's visual identity. Same architecture, different audiences, different visual languages.</p>
         <p>Architecture diagrams serve communication. The technical truth stays the same, but how you present it depends on who's reading. That's the extension I'm working toward.</p>
+    </section>
+
+    <section class="examples">
+        <h2>Generated examples</h2>
+
+        <div class="example-card">
+            <img src="example-event-driven.png" alt="Event-Driven Order Processing diagram">
+            <div class="example-meta">
+                <span class="prompt">"Create an event-driven order processing architecture with SQS, Lambda, DynamoDB, and EventBridge"</span>
+                <a href="https://github.com/vidanov/aws-architecture-diagram-skill/blob/main/examples/example-event-driven.drawio">Download .drawio</a>
+            </div>
+        </div>
+
+        <div class="example-card">
+            <img src="example-streaming.png" alt="Real-Time IoT Analytics Pipeline diagram">
+            <div class="example-meta">
+                <span class="prompt">"Create a real-time IoT analytics pipeline with Kinesis, Lambda, S3 data lake, and DynamoDB"</span>
+                <a href="https://github.com/vidanov/aws-architecture-diagram-skill/blob/main/examples/example-streaming.drawio">Download .drawio</a>
+            </div>
+        </div>
+
+        <div class="example-card">
+            <img src="example-3tier.png" alt="3-Tier Web Application diagram">
+            <div class="example-meta">
+                <span class="prompt">"Create a 3-tier web application with CloudFront, ALB, ECS Fargate, Aurora, and ElastiCache"</span>
+                <a href="https://github.com/vidanov/aws-architecture-diagram-skill/blob/main/examples/example-3tier.drawio">Download .drawio</a>
+            </div>
+        </div>
     </section>
 
     <section class="features">
