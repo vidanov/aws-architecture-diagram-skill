@@ -29,7 +29,7 @@
         .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
 
         /* Hero Card (from the animated design) */
-        .hero-section { padding: 60px 0 40px; }
+        .hero-section { padding: 32px 0 24px; }
         .hero-card {
             background: #fff;
             border-radius: 16px;
@@ -243,11 +243,42 @@
         }
         footer a { color: var(--accent); text-decoration: none; }
         footer a:hover { text-decoration: underline; }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        header .site-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+        }
+        header nav { display: flex; gap: 20px; }
+        header nav a {
+            font-size: 0.88rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        header nav a:hover { color: var(--accent); }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <header>
+        <a href="https://vidanov.github.io/aws-architecture-diagram-skill/" class="site-name">AWS Architecture Diagram Skill</a>
+        <nav>
+            <a href="https://github.com/vidanov/aws-architecture-diagram-skill">GitHub</a>
+            <a href="https://www.linkedin.com/in/interweb/">LinkedIn</a>
+        </nav>
+    </header>
+
     <section class="hero-section">
         <div class="hero-card">
             <div class="topbar">
