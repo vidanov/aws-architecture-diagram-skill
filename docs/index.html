@@ -264,6 +264,16 @@
         .tag-next { background: var(--green-light); color: #085041; }
         .tag-planned { background: var(--accent-light); color: var(--accent); }
 
+        /* Comparison */
+        .comparison { padding: 48px 0; }
+        .comparison h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 20px; }
+        .comparison table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .comparison th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); font-weight: 600; color: var(--text); }
+        .comparison td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--muted); }
+        .comparison tr:first-child td { color: var(--text); font-weight: 500; }
+        .comparison a { color: var(--muted); text-decoration: none; }
+        .comparison a:hover { color: var(--accent); }
+
         /* Footer */
         footer {
             border-top: 1px solid var(--border);
@@ -462,6 +472,39 @@
             <h3>Dual platform</h3>
             <p>Works in both Kiro CLI and Claude Code. Same skill, same output quality.</p>
         </div>
+    </section>
+
+    <section class="comparison">
+        <h2>Comparison with alternatives</h2>
+        <table>
+            <tr>
+                <th>Solution</th><th>Type</th><th>Output</th><th>Editable</th><th>Zero-deps</th><th>Verified Icons</th>
+            </tr>
+            <tr>
+                <td><a href="https://github.com/vidanov/aws-architecture-diagram-skill">aws-architecture-diagram-skill</a></td>
+                <td>Agent Skill</td><td>.drawio</td><td>✅</td><td>✅</td><td>✅</td>
+            </tr>
+            <tr>
+                <td><a href="https://github.com/jgraph/drawio-mcp">jgraph/drawio-mcp</a></td>
+                <td>MCP Server + Skill</td><td>.drawio</td><td>✅</td><td>❌ (MCP)</td><td>❌</td>
+            </tr>
+            <tr>
+                <td><a href="https://pypi.org/project/awslabs.aws-diagram-mcp-server/">awslabs/aws-diagram-mcp-server</a></td>
+                <td>MCP Server (Python)</td><td>PNG</td><td>❌</td><td>❌ (Python+GraphViz)</td><td>N/A</td>
+            </tr>
+            <tr>
+                <td><a href="https://github.com/awslabs/diagram-as-code">awslabs/diagram-as-code</a></td>
+                <td>CLI (Go)</td><td>PNG/SVG</td><td>❌</td><td>❌ (Go binary)</td><td>N/A</td>
+            </tr>
+            <tr>
+                <td><a href="https://github.com/carlosmgv02/diagram-ai-generator">carlosmgv02/diagram-ai-generator</a></td>
+                <td>MCP Server</td><td>Multi-cloud</td><td>❌</td><td>❌ (MCP)</td><td>❌</td>
+            </tr>
+            <tr>
+                <td><a href="https://clouda.ai/">clouda.ai</a></td>
+                <td>SaaS</td><td>PNG</td><td>❌</td><td>N/A</td><td>N/A</td>
+            </tr>
+        </table>
     </section>
 
     <section class="roadmap">
