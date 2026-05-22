@@ -121,7 +121,7 @@ These `resIcon` values do NOT render in draw.io — avoid them:
 
 | Solution | Type | Output | Editable | Zero-deps | Verified Icons |
 |----------|------|--------|----------|-----------|----------------|
-| **This skill** | Agent Skill | `.drawio` | ✅ | ✅ | ✅ |
+| **[aws-architecture-diagram-skill](https://github.com/vidanov/aws-architecture-diagram-skill)** | Agent Skill | `.drawio` | ✅ | ✅ | ✅ |
 | [jgraph/drawio-mcp](https://github.com/jgraph/drawio-mcp) | MCP Server + Skill | `.drawio` | ✅ | ❌ (MCP) | ❌ |
 | [awslabs/aws-diagram-mcp-server](https://pypi.org/project/awslabs.aws-diagram-mcp-server/) | MCP Server (Python) | PNG | ❌ | ❌ (Python+GraphViz) | N/A |
 | [awslabs/diagram-as-code](https://github.com/awslabs/diagram-as-code) | CLI (Go) | PNG/SVG | ❌ | ❌ (Go binary) | N/A |
