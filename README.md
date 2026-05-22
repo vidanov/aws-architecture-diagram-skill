@@ -1,5 +1,7 @@
 # AWS Architecture Diagram Skill
 
+![Prompt → AI Agent + Skill → .drawio diagram](docs/hero.png)
+
 A reusable skill for generating AWS architecture diagrams in draw.io format. Works with both **Kiro CLI** and **Claude Code**.
 
 Generates production-quality `.drawio` files using official AWS Architecture Icons with proper styling, layout, and color coding.
