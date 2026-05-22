@@ -27,57 +27,31 @@ Generate a draw.io (.drawio) XML file representing an AWS architecture diagram.
 - Edge style: `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;`
 - Font size: **12px** for labels
 
-### AWS Icon Patterns (VERIFIED WORKING)
+### Two Icon Patterns — CRITICAL
 
-**Lambda:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;fillColor=#ED7100
-```
+**Pattern 1: Service-level (resourceIcon frame)**
+- Style: `shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<name>`
+- **MUST use `strokeColor=#ffffff`** — without it, the white glyph disappears
+- Size: 78x78
 
-**API Gateway:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;fillColor=#E7157B
-```
+**Pattern 2: Resource-level (standalone shape)**
+- Style: `shape=mxgraph.aws4.<name>` directly (no resIcon)
+- **MUST use `strokeColor=none`** — using #ffffff breaks these
+- Size: 78x78 or 48x48
 
-**EventBridge:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;fillColor=#E7157B
-```
+**Confusing these patterns guarantees broken icons.**
 
-**SNS:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sns;fillColor=#E7157B
-```
+### Icon Reference Files (load by category as needed)
+- `references/aws-icons-compute.md` — Lambda, EC2, ECS, EKS, Fargate
+- `references/aws-icons-database.md` — DynamoDB, RDS, Aurora, ElastiCache
+- `references/aws-icons-integration.md` — API Gateway, SQS, SNS, EventBridge, Step Functions
+- `references/aws-icons-networking.md` — CloudFront, Route 53, VPC, ELB
+- `references/aws-icons-storage.md` — S3, EFS, EBS, Glacier, Backup
+- `references/aws-icons-security.md` — IAM, Cognito, KMS, WAF, Shield
+- `references/aws-icons-analytics-ml.md` — Kinesis, Athena, Bedrock, SageMaker
+- `references/aws-icons-common.md` — Groups, general resources, edge styles, base template
 
-**SQS (use productIcon style — taller with header bar):**
-```
-shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.sqs;fillColor=#232F3E;strokeColor=#ffffff
-```
-
-**DynamoDB (use for tables AND streams — differentiate by label):**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.dynamodb;fillColor=#C925D1
-```
-
-**S3:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;fillColor=#7AA116
-```
-
-**CloudFront:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;fillColor=#8C4FFF
-```
-
-**RDS:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;fillColor=#C925D1
-```
-
-**ECS:**
-```
-shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecs;fillColor=#ED7100
-```
+**Always look up icons from reference files. Never guess icon names.**
 
 ### Group Boundaries
 - **AWS Cloud:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none`
@@ -86,17 +60,12 @@ shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ecs;fillColor=#ED7100
 - **Logical groups:** Simple dashed boxes: `whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8`
 - **NO colored backgrounds** on group boxes — always `fillColor=none`
 
-### DO NOT USE (broken/empty icons)
-- `resIcon=mxgraph.aws4.dynamodb_table` — renders as empty colored square
-- `resIcon=mxgraph.aws4.dynamodb_stream` — renders as empty colored square
-- `resIcon=mxgraph.aws4.general_saml_token` — renders as black square
-- `resIcon=mxgraph.aws4.endpoint` — may not render
-- `resIcon=mxgraph.aws4.kinesis_data_streams` — unreliable as DDB Streams substitute
-
-### Correct Alternatives
-- DynamoDB tables/streams: use `resIcon=mxgraph.aws4.dynamodb` with descriptive labels
-- External systems: use `shape=mxgraph.aws4.traditional_server` (standalone, no resIcon)
-- Browsers/clients: use `shape=mxgraph.aws4.client` (standalone, no resIcon)
+### PNG Export Background Fix
+Place a light gray rectangle covering the entire diagram as the bottom-most element:
+```
+rounded=1;whiteSpace=wrap;fillColor=#F5F5F5;strokeColor=#E0E0E0;arcSize=2;
+```
+This prevents black background on areas outside groups when exporting to PNG.
 
 ### File Splitting
 Since draw.io XML can be large, split creation across multiple tool calls:
