@@ -20,8 +20,16 @@ Generate AWS architecture diagrams as native `.drawio` files using official AWS 
 - **UI/Frontend on the LEFT** (users access from left side)
 - **Data sources / external systems on the RIGHT**
 - Use horizontal lanes for parallel paths (top lane, bottom lane)
-- Minimum 150px horizontal spacing, 200px vertical between lanes
+- **Minimum 220px horizontal spacing** between icons (room for edge labels)
+- **Minimum 250px vertical spacing** between lanes
+- Secondary/auxiliary services (monitoring, DLQ) go BELOW main flow with 280px+ gap
 - Canvas: `pageWidth="2400" pageHeight="1400"`, viewport `dx="2800" dy="1600"`
+- Always include a title block after the background rectangle:
+```xml
+<mxCell value="&lt;b&gt;Diagram Title&lt;/b&gt;&lt;br&gt;Author | Date | Version" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
+  <mxGeometry x="40" y="30" width="420" height="60" as="geometry" />
+</mxCell>
+```
 
 ## Icon Style
 
@@ -29,10 +37,39 @@ Generate AWS architecture diagrams as native `.drawio` files using official AWS 
 - Icon size: **78x78px** for main services, **65x65px** for secondary
 - Use `sketch=0` on all icons
 - Use `strokeColor=#ffffff` on all AWS service icons
-- Use `strokeWidth=2` on all edges
-- Edge style: `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;`
 - Font size: **12px** for labels
 - **NO colored backgrounds** on group boxes — always `fillColor=none`
+
+## Edge Style — CRITICAL FOR CLEAN DIAGRAMS
+
+**Base edge style:**
+```
+edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;
+```
+
+**Edge label rules:**
+- Keep labels SHORT (1-2 words max). Detail goes in icon labels, not edge labels.
+- Always add `labelBackgroundColor=#F5F5F5;fontSize=11;` to edges with labels
+- For edges WITHOUT labels: omit `value` entirely
+- When NOT to label: if the flow is obvious (Lambda → DynamoDB doesn't need "Write")
+
+**For edges to services ABOVE or BELOW main flow, use explicit exit/entry points:**
+- Exit bottom: `exitX=0.5;exitY=1;exitDx=0;exitDy=0;`
+- Enter top: `entryX=0.5;entryY=0;entryDx=0;entryDy=0;`
+- This prevents draw.io from routing lines through other icons
+
+**Edge types:**
+- Solid (`strokeWidth=2`): primary data flow
+- Dashed (`strokeWidth=2;dashed=1;`): optional/async
+- Red dashed (`strokeWidth=2;dashed=1;strokeColor=#DD344C;`): error path
+
+## PNG Export Background
+First element after root cells (lowest z-order):
+```xml
+<mxCell value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=none;" vertex="1" parent="1">
+  <mxGeometry x="0" y="0" width="2400" height="1400" as="geometry" />
+</mxCell>
+```
 
 ## AWS Icon Patterns (VERIFIED WORKING)
 

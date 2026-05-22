@@ -1,144 +1,121 @@
 ---
 name: aws-architecture-diagram
-description: Always use when user asks to create, generate, or build an AWS architecture diagram, cloud infrastructure diagram, or system diagram with AWS services. Also activates for draw.io diagrams mentioning AWS services like Lambda, DynamoDB, S3, API Gateway, etc.
+description: Generate AWS architecture diagrams in draw.io format. Activates when the user asks to create, generate, or build an architecture diagram, system diagram, or draw.io diagram for AWS services.
 ---
 
-# AWS Architecture Diagram Skill
+## Instructions
 
-Generate AWS architecture diagrams as native `.drawio` files using official AWS Architecture Icons. Optionally export to PNG, SVG, or PDF with embedded XML (so exported files remain editable in draw.io).
+Generate a draw.io (.drawio) XML file representing an AWS architecture diagram.
 
-## How to create a diagram
-
-1. **Generate draw.io XML** in mxGraphModel format following the rules below
-2. **Write the XML** to a `.drawio` file using the Write tool
-3. **If the user requested an export format** (png, svg, pdf), export using the draw.io CLI (see Export section)
-4. **Open the result** with `open` (macOS), `xdg-open` (Linux), or print the path
-
-## Layout Rules
-
+### Layout
 - **Left-to-right flow** for data/request path
 - **UI/Frontend on the LEFT** (users access from left side)
 - **Data sources / external systems on the RIGHT**
 - Use horizontal lanes for parallel paths (top lane, bottom lane)
-- Minimum 150px horizontal spacing, 200px vertical between lanes
-- Canvas: `pageWidth="2400" pageHeight="1400"`, viewport `dx="2800" dy="1600"`
+- **Minimum 220px horizontal spacing** between icons (to leave room for edge labels)
+- **Minimum 250px vertical spacing** between lanes (so vertical edges don't crowd)
+- Secondary/auxiliary services (monitoring, DLQ, error paths) go BELOW the main flow with 280px+ vertical gap
 
-## Icon Style
+### Canvas
+- Large canvas: `pageWidth="2400" pageHeight="1400"` minimum
+- Set `dx="2800" dy="1600"` for proper viewport
+- Always include a title block as the first element after the background:
+```xml
+<mxCell value="&lt;b&gt;Diagram Title&lt;/b&gt;&lt;br&gt;Author | Date | Version" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
+  <mxGeometry x="40" y="30" width="420" height="60" as="geometry" />
+</mxCell>
+```
 
-- Icons are from draw.io's built-in `mxgraph.aws4` stencil library — the **official AWS Architecture Icons** (https://aws.amazon.com/architecture/icons/)
+### Icon Style
+- Icons are from draw.io's built-in `mxgraph.aws4` stencil library — the **official AWS Architecture Icons** (https://aws.amazon.com/architecture/icons/, updated quarterly)
 - Icon size: **78x78px** for main services, **65x65px** for secondary
 - Use `sketch=0` on all icons
 - Use `strokeColor=#ffffff` on all AWS service icons
-- Use `strokeWidth=2` on all edges
-- Edge style: `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;`
 - Font size: **12px** for labels
+
+### Edge Style — CRITICAL FOR CLEAN DIAGRAMS
+
+**Base edge style (all edges):**
+```
+edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;
+```
+
+**Rules for edge labels:**
+- Keep labels SHORT (1-2 words max). Use icon labels for detail, not edge labels.
+- On horizontal edges: position label ABOVE the line using `verticalAlign=bottom;` in the edge style
+- On vertical edges: position label to the LEFT using `align=right;` in the edge style
+- Always add `labelBackgroundColor=#F5F5F5;` so labels don't overlap lines
+- For edges WITHOUT labels: omit the `value` attribute entirely (don't use `value=""`)
+
+**Edge label positioning (prevents overlap with icons):**
+```xml
+<mxCell value="Label" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;labelBackgroundColor=#F5F5F5;fontSize=11;" edge="1" source="a" target="b" parent="1">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+```
+
+**For edges that go to services ABOVE or BELOW the main flow:**
+- Use explicit exit/entry points to control routing:
+  - Exit bottom: `exitX=0.5;exitY=1;exitDx=0;exitDy=0;`
+  - Enter top: `entryX=0.5;entryY=0;entryDx=0;entryDy=0;`
+  - Exit top: `exitX=0.5;exitY=0;exitDx=0;exitDy=0;`
+  - Enter bottom: `entryX=0.5;entryY=1;entryDx=0;entryDy=0;`
+- This prevents draw.io from routing lines through other icons
+
+**Edge types:**
+- Solid black (`strokeWidth=2`): primary data flow
+- Dashed black (`strokeWidth=2;dashed=1;`): optional/async path
+- Dashed red (`strokeWidth=2;dashed=1;strokeColor=#DD344C;`): error path
+
+**When NOT to label edges:**
+- If the flow is obvious from context (e.g., Lambda → DynamoDB doesn't need "Write")
+- If the icon labels already explain the relationship
+- Prefer fewer, more meaningful labels over labeling every edge
+
+### Two Icon Patterns — CRITICAL
+
+**Pattern 1: Service-level (resourceIcon frame)**
+- Style: `shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<name>`
+- **MUST use `strokeColor=#ffffff`** — without it, the white glyph disappears
+- Size: 78x78
+
+**Pattern 2: Resource-level (standalone shape)**
+- Style: `shape=mxgraph.aws4.<name>` directly (no resIcon)
+- **MUST use `strokeColor=none`** — using #ffffff breaks these
+- Size: 78x78 or 48x48
+
+**Confusing these patterns guarantees broken icons.**
+
+### Icon Reference Files (load by category as needed)
+- `references/aws-icons-compute.md` — Lambda, EC2, ECS, EKS, Fargate
+- `references/aws-icons-database.md` — DynamoDB, RDS, Aurora, ElastiCache
+- `references/aws-icons-integration.md` — API Gateway, SQS, SNS, EventBridge, Step Functions
+- `references/aws-icons-networking.md` — CloudFront, Route 53, VPC, ELB
+- `references/aws-icons-storage.md` — S3, EFS, EBS, Glacier, Backup
+- `references/aws-icons-security.md` — IAM, Cognito, KMS, WAF, Shield
+- `references/aws-icons-analytics-ml.md` — Kinesis, Athena, Bedrock, SageMaker
+- `references/aws-icons-common.md` — Groups, general resources, edge styles, base template
+
+**Always look up icons from reference files. Never guess icon names.**
+
+### Group Boundaries
+- **AWS Cloud:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none`
+- **Account:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_account;strokeColor=#CD2264;fillColor=none`
+- **On-premise:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_on_premise;strokeColor=#5A6C86;fillColor=none`
+- **Logical groups:** Simple dashed boxes: `whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8`
 - **NO colored backgrounds** on group boxes — always `fillColor=none`
 
-## AWS Icon Patterns (VERIFIED WORKING)
-
-### resourceIcon (78x78, colored square frame)
-
-| Service | resIcon | fillColor |
-|---------|---------|-----------|
-| Lambda | `mxgraph.aws4.lambda` | `#ED7100` |
-| API Gateway | `mxgraph.aws4.api_gateway` | `#E7157B` |
-| EventBridge | `mxgraph.aws4.eventbridge` | `#E7157B` |
-| SNS | `mxgraph.aws4.sns` | `#E7157B` |
-| Step Functions | `mxgraph.aws4.step_functions` | `#E7157B` |
-| DynamoDB | `mxgraph.aws4.dynamodb` | `#C925D1` |
-| RDS | `mxgraph.aws4.rds` | `#C925D1` |
-| S3 | `mxgraph.aws4.s3` | `#7AA116` |
-| CloudFront | `mxgraph.aws4.cloudfront` | `#8C4FFF` |
-| Route 53 | `mxgraph.aws4.route_53` | `#8C4FFF` |
-| ECS | `mxgraph.aws4.ecs` | `#ED7100` |
-| EC2 | `mxgraph.aws4.ec2` | `#ED7100` |
-
-Style template:
+### PNG Export Background Fix
+Place a full-canvas rectangle as the FIRST element (lowest z-order):
+```xml
+<mxCell value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=none;" vertex="1" parent="1">
+  <mxGeometry x="0" y="0" width="2400" height="1400" as="geometry" />
+</mxCell>
 ```
-sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=<COLOR>;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<SERVICE>
-```
-
-### productIcon (70x100, taller with service header bar)
-
-| Service | prIcon |
-|---------|--------|
-| SQS | `mxgraph.aws4.sqs` |
-
-Style template:
-```
-sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.<SERVICE>
-```
-
-### Standalone shapes (no resIcon needed)
-
-| Shape | shape value | fillColor |
-|-------|-------------|-----------|
-| Client/Browser | `mxgraph.aws4.client` | `#232F3D` |
-| Traditional Server | `mxgraph.aws4.traditional_server` | `#232F3D` |
-| Firewall | `mxgraph.aws4.generic_firewall` | `#232F3D` |
-| ALB | `mxgraph.aws4.application_load_balancer` | `#8C4FFF` |
-| NLB | `mxgraph.aws4.network_load_balancer` | `#8C4FFF` |
-| VPC Endpoint | `mxgraph.aws4.endpoints` | `#8C4FFF` |
-
-### Group boundaries
-
-| Group | grIcon | strokeColor |
-|-------|--------|-------------|
-| AWS Cloud | `mxgraph.aws4.group_aws_cloud_alt` | `#232F3E` |
-| Account | `mxgraph.aws4.group_account` | `#CD2264` |
-| On-premise | `mxgraph.aws4.group_on_premise` | `#5A6C86` |
-| Corporate DC | `mxgraph.aws4.group_corporate_data_center` | `#388E3C` |
-
-## BROKEN Icons — DO NOT USE
-
-- `resIcon=mxgraph.aws4.dynamodb_table` — renders as empty colored square
-- `resIcon=mxgraph.aws4.dynamodb_stream` — renders as empty colored square
-- `resIcon=mxgraph.aws4.general_saml_token` — renders as black square
-- `resIcon=mxgraph.aws4.endpoint` — may not render
-- `resIcon=mxgraph.aws4.kinesis_data_streams` — unreliable
-
-**Alternatives:**
-- DynamoDB tables/streams → use `resIcon=mxgraph.aws4.dynamodb` with descriptive labels
-- External systems → use `shape=mxgraph.aws4.traditional_server`
-- Browsers/clients → use `shape=mxgraph.aws4.client`
-
-## Audience Mode
-
-Before generating, assess the target audience:
-- **Technical**: Use service names, protocol labels (HTTPS, gRPC), CIDR blocks, instance types
-- **Non-technical**: Use action labels ("Store Data", "Send Notification"), hide implementation details, use numbered flow (① ② ③)
-
-If unclear, ask: "Technical audience or executive/non-technical?"
-
-### Numbered flow edges (for non-technical mode)
-Instead of technical labels, show flow order with circled numbers:
-- Flow A: ① → ② → ③ → ④ (white circled numbers)
-- Flow B: ❶ → ❷ → ❸ → ❹ (black circled numbers for second flow)
-
-Use edge labels: `value="①"` with `fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;`
-
-## Companion Guide
-
-After generating the .drawio file, also generate a markdown guide:
-- Same filename with `.md` extension
-- Contents: diagram title, flow description (numbered steps), service list with purpose, key design decisions
-
-## Validation Step
-
-After generating XML, verify:
-1. Every `resIcon=` value exists in the reference files
-2. Service-level icons have `strokeColor=#ffffff`
-3. Resource-level icons have `strokeColor=none`
-4. No XML comments present
-5. All cell IDs are unique
-6. Every edge has `<mxGeometry relative="1" as="geometry" />`
-
-## Export
-
-For PNG/SVG/PDF export using draw.io Desktop CLI:
+This prevents black background on PNG export. Use `strokeColor=none` (not E0E0E0).
 
 ### Multi-page Diagrams
-For complex architectures, use multiple pages in one .drawio file:
+For complex architectures, use multiple pages (tabs) in one .drawio file:
 ```xml
 <mxfile>
   <diagram id="overview" name="Overview">...</diagram>
@@ -149,42 +126,63 @@ For complex architectures, use multiple pages in one .drawio file:
 - Page 1: High-level overview (service-level icons only)
 - Page 2+: Detail views (resource-level icons, subnet layouts, etc.)
 
-### Legend / Title Block
-Place in top-left corner, inside the background rectangle:
-```xml
-<mxCell value="&lt;b&gt;Diagram Title&lt;/b&gt;&lt;br&gt;Author | Date | Version" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
-  <mxGeometry x="40" y="40" width="300" height="50" as="geometry" />
-</mxCell>
-```
+### Edge Legend (optional, for complex diagrams)
+Place below the title block if the diagram has multiple edge types:
+- Solid line: primary data flow
+- Dashed line: optional/async
+- Red dashed: error path
 
-### PNG Export Background Fix
-Place a `#F5F5F5` rectangle covering the entire diagram as the bottom-most element to prevent black background on export.
+### File Splitting
+Since draw.io XML can be large, split creation across multiple tool calls:
+1. Header + left side (frontend, delivery layer)
+2. Middle (processing lambdas, database)
+3. Right side (ingest, messaging, data sources)
+4. Bottom (optional/outbound flows) + close XML
 
-### Export CLI
+### Audience Mode
+Before generating, assess the target audience:
+- **Technical**: Use service names, protocol labels (HTTPS, gRPC), CIDR blocks, instance types
+- **Non-technical**: Use action labels ("Store Data", "Send Notification"), hide implementation details, use numbered flow (① ② ③)
 
-| Platform | CLI Path |
-|----------|----------|
-| macOS | `/Applications/draw.io.app/Contents/MacOS/draw.io` |
-| Linux | `drawio` (on PATH via snap/apt) |
-| Windows | `"C:\Program Files\draw.io\draw.io.exe"` |
+If unclear, ask: "Technical audience or executive/non-technical?"
 
-```bash
-<CLI> -x -f <format> -e -b 10 -o <output> <input>
-```
+### Numbered Flow Edges (for non-technical mode)
+Instead of technical labels, show flow order with circled numbers:
+- Flow A: ① → ② → ③ → ④ (white circled numbers)
+- Flow B: ❶ → ❷ → ❸ → ❹ (black circled numbers for second flow)
 
-Flags: `-x` export, `-f` format (png/svg/pdf), `-e` embed diagram XML, `-b 10` border
+Use edge labels: `value="①"` with `fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;`
 
-Exported files use double extension: `name.drawio.png` — signals embedded XML, re-editable in draw.io.
+### Companion Guide
+After generating the .drawio file, also generate a markdown guide:
+- Same filename with `.md` extension (e.g., `serverless-api.drawio` + `serverless-api.md`)
+- Contents: diagram title, flow description (numbered steps matching edge labels), service list with purpose, key design decisions
 
-## XML Well-formedness (CRITICAL)
+### Validation Step
+After generating XML, mentally verify:
+1. Every `resIcon=` value exists in the reference files
+2. Service-level icons have `strokeColor=#ffffff`
+3. Resource-level icons have `strokeColor=none`
+4. No XML comments present
+5. All cell IDs are unique
+6. Every edge has `<mxGeometry relative="1" as="geometry" />`
 
+### Output
+- Save with descriptive filename ending in `.drawio`
+- Open with `open` command (macOS) or `xdg-open` (Linux) after creation
+- For PNG/SVG/PDF export, use draw.io CLI:
+  - macOS: `/Applications/draw.io.app/Contents/MacOS/draw.io -x -f png -e -b 10 -o output.drawio.png input.drawio`
+  - Linux: `drawio -x -f png -e -b 10 -o output.drawio.png input.drawio`
+  Flags: `-x` export, `-f` format, `-e` embed diagram XML, `-b 10` border
+- Exported files use double extension: `name.drawio.png` (signals embedded XML, re-editable in draw.io)
+
+### XML Well-formedness (CRITICAL)
 - **NEVER include XML comments (`<!-- -->`)** — they cause parse errors
-- Escape special characters: `&amp;` `&lt;` `&gt;` `&quot;`
+- Escape special characters in values: `&amp;` `&lt;` `&gt;` `&quot;`
 - Always use unique `id` values for each mxCell
-- Every edge MUST have `<mxGeometry relative="1" as="geometry" />` as child
-- Root structure requires cells `id="0"` (root) and `id="1"` (default layer, parent="0")
+- Every edge MUST have `<mxGeometry relative="1" as="geometry" />` as child element
+- Basic structure must include root cells `id="0"` and `id="1"` (parent="0")
 
-## Official Reference
-
-- XML reference: https://raw.githubusercontent.com/jgraph/drawio-mcp/main/shared/xml-reference.md
-- Style reference: https://raw.githubusercontent.com/jgraph/drawio-mcp/main/shared/style-reference.md
+### Official Reference
+- Full XML/style reference: https://raw.githubusercontent.com/jgraph/drawio-mcp/main/shared/xml-reference.md
+- Style properties: https://raw.githubusercontent.com/jgraph/drawio-mcp/main/shared/style-reference.md
