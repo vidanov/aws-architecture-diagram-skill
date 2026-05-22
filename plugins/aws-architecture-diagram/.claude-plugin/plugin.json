@@ -1,0 +1,5 @@
+{
+  "name": "aws-architecture-diagram",
+  "description": "Generate AWS architecture diagrams as draw.io XML with 270+ verified icons, left-to-right layout, and reference templates",
+  "version": "1.1.0"
+}

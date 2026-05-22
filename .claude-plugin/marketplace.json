@@ -1,0 +1,25 @@
+{
+  "name": "vidanov-skills",
+  "description": "AWS architecture diagram generation skill with verified icons and reference templates",
+  "version": "1.1.0",
+  "owner": {
+    "name": "Alexey Vidanov",
+    "email": "alexey@vidanov.com"
+  },
+  "plugins": [
+    {
+      "name": "aws-architecture-diagram",
+      "source": "./plugins/aws-architecture-diagram",
+      "description": "Generate AWS architecture diagrams as draw.io XML with 270+ verified icons, left-to-right layout, and reference templates",
+      "version": "1.1.0",
+      "author": {
+        "name": "Alexey Vidanov"
+      },
+      "homepage": "https://github.com/vidanov/aws-architecture-diagram-skill",
+      "repository": "https://github.com/vidanov/aws-architecture-diagram-skill",
+      "license": "MIT",
+      "keywords": ["aws", "architecture", "diagram", "drawio", "draw.io", "icons"],
+      "category": "devops"
+    }
+  ]
+}
