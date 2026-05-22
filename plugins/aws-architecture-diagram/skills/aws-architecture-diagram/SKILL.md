@@ -137,6 +137,31 @@ After generating XML, verify:
 
 For PNG/SVG/PDF export using draw.io Desktop CLI:
 
+### Multi-page Diagrams
+For complex architectures, use multiple pages in one .drawio file:
+```xml
+<mxfile>
+  <diagram id="overview" name="Overview">...</diagram>
+  <diagram id="networking" name="Networking Detail">...</diagram>
+  <diagram id="data-flow" name="Data Flow">...</diagram>
+</mxfile>
+```
+- Page 1: High-level overview (service-level icons only)
+- Page 2+: Detail views (resource-level icons, subnet layouts, etc.)
+
+### Legend / Title Block
+Place in top-left corner, inside the background rectangle:
+```xml
+<mxCell value="&lt;b&gt;Diagram Title&lt;/b&gt;&lt;br&gt;Author | Date | Version" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
+  <mxGeometry x="40" y="40" width="300" height="50" as="geometry" />
+</mxCell>
+```
+
+### PNG Export Background Fix
+Place a `#F5F5F5` rectangle covering the entire diagram as the bottom-most element to prevent black background on export.
+
+### Export CLI
+
 | Platform | CLI Path |
 |----------|----------|
 | macOS | `/Applications/draw.io.app/Contents/MacOS/draw.io` |
