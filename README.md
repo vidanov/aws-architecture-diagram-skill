@@ -1,5 +1,7 @@
 # AWS Architecture Diagram Skill
 
+[![Website](https://img.shields.io/badge/Website-vidanov.github.io-8C4FFF)](https://vidanov.github.io/aws-architecture-diagram-skill/)
+
 ![Prompt → AI Agent + Skill → .drawio diagram](docs/hero.png)
 
 A reusable skill for generating AWS architecture diagrams in draw.io format. Works with both **Kiro CLI** and **Claude Code**.
