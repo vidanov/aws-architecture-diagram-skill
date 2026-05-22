@@ -7,14 +7,16 @@
     <meta name="description" content="An open-source skill for Kiro CLI and Claude Code that generates production-quality AWS architecture diagrams as editable .drawio files with verified icons.">
     <style>
         :root {
-            --bg: #fafafa;
-            --text: #1a1a1a;
-            --muted: #666;
-            --accent: #8C4FFF;
-            --accent-light: #f3edff;
-            --border: #e5e5e5;
-            --code-bg: #f5f5f5;
-            --max-w: 720px;
+            --bg: #fafaf8;
+            --text: #2c2c2a;
+            --muted: #5f5e5a;
+            --light: #aaa89f;
+            --accent: #534AB7;
+            --accent-light: #EEEDFE;
+            --green: #1D9E75;
+            --green-light: #e1f5ee;
+            --border: #e2e0d8;
+            --max-w: 760px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -25,147 +27,303 @@
             font-size: 17px;
         }
         .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
-        
-        /* Hero */
-        .hero {
-            padding: 80px 0 60px;
-            text-align: center;
+
+        /* Hero Card (from the animated design) */
+        .hero-section { padding: 60px 0 40px; }
+        .hero-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 48px rgba(0,0,0,0.08);
         }
-        .hero h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 24px;
+            border-bottom: 1px solid #eeece6;
+            background: var(--bg);
         }
-        .hero .subtitle {
-            font-size: 1.15rem;
-            color: var(--muted);
-            max-width: 560px;
-            margin: 0 auto 32px;
+        .logo { display: flex; align-items: center; gap: 9px; }
+        .logo-mark {
+            width: 28px; height: 28px; border-radius: 6px;
+            background: linear-gradient(135deg, #534AB7, #1D9E75);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700; color: #fff;
         }
-        .hero-img {
-            width: 100%;
-            max-width: 680px;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            margin: 0 auto;
-            display: block;
+        .logo-text { font-size: 12.5px; font-weight: 500; color: var(--text); }
+        .topbadges { display: flex; gap: 5px; }
+        .tbadge { padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 500; border: 1px solid; }
+        .b-mit { color: #085041; border-color: #5DCAA5; background: #e1f5ee; }
+        .b-kiro { color: #3C3489; border-color: #AFA9EC; background: #EEEDFE; }
+        .b-cc { color: #633806; border-color: #EF9F27; background: #FAEEDA; }
+
+        .card-content {
+            display: flex;
+            align-items: center;
+            padding: 32px 28px;
+            gap: 0;
+            background: #fff;
         }
 
-        /* Install */
+        .prompt-card {
+            flex-shrink: 0; width: 144px;
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 10px; overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .pc-bar { background: #f0ede6; padding: 8px 11px; display: flex; gap: 5px; }
+        .pcdot { width: 7px; height: 7px; border-radius: 50%; }
+        .pc-body { padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+        .pc-line { height: 6px; border-radius: 3px; background: #e2e0d8; }
+        .pc-line.hi { background: #CCC8F6; }
+
+        .conn { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0 14px; flex-shrink: 0; }
+        .conn-lbl { font-size: 9px; font-weight: 500; letter-spacing: .5px; text-transform: uppercase; white-space: nowrap; }
+        .conn-arrow { height: 1.5px; width: 44px; position: relative; }
+        .conn-arrow::after { content: ''; position: absolute; right: -7px; top: -4.5px; border: 5px solid transparent; }
+        .c-in .conn-lbl { color: #AFA9EC; }
+        .c-in .conn-arrow { background: linear-gradient(90deg, #CCC8F6, #534AB7); }
+        .c-in .conn-arrow::after { border-left: 9px solid #534AB7; }
+        .c-out .conn-lbl { color: #5DCAA5; }
+        .c-out .conn-arrow { background: linear-gradient(90deg, #1D9E75, #9FE1CB); }
+        .c-out .conn-arrow::after { border-left: 9px solid #9FE1CB; }
+
+        .agent { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 7px; }
+        .orb {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: linear-gradient(145deg, #534AB7, #7F77DD 55%, #3C3489);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 0 0 6px #EEEDFE, 0 0 0 12px rgba(127,119,221,0.1), 0 4px 20px rgba(83,74,183,0.2);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 6px #EEEDFE, 0 0 0 12px rgba(127,119,221,0.1), 0 4px 20px rgba(83,74,183,0.2); }
+            50% { box-shadow: 0 0 0 8px #EEEDFE, 0 0 0 16px rgba(127,119,221,0.15), 0 4px 28px rgba(83,74,183,0.3); }
+        }
+        .orb-t { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.2; text-align: center; }
+        .orb-s { font-size: 8px; color: rgba(255,255,255,0.55); letter-spacing: .3px; margin-top: 1px; }
+        .agent-lbl { font-size: 8.5px; color: var(--light); letter-spacing: .3px; text-align: center; }
+
+        .diagram-card {
+            flex: 1; min-width: 0;
+            border: 1.5px solid var(--border); border-radius: 12px;
+            overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+        }
+        .dc-bar {
+            background: #f0ede6; border-bottom: 1px solid var(--border);
+            padding: 7px 13px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .dc-filename { font-size: 10px; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+        .dc-dot { width: 6px; height: 6px; border-radius: 50%; background: #5DCAA5; }
+        .dc-pill { background: #085041; border-radius: 5px; padding: 2px 7px; font-size: 9px; font-weight: 600; color: #9FE1CB; letter-spacing: .3px; }
+        .dc-img img { display: block; width: 100%; height: auto; background: #F5F5F5; }
+
+        .card-bottom {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 24px 17px; border-top: 1px solid #eeece6; background: var(--bg);
+        }
+        .tagline { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: -0.2px; }
+        .tagline-sub { font-size: 10.5px; color: var(--light); margin-top: 2px; }
+        .pills { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 280px; }
+        .pill { padding: 3px 10px; border-radius: 20px; font-size: 9px; font-weight: 500; border: 1px solid; }
+        .p1 { color: #085041; border-color: #5DCAA5; background: #e1f5ee; }
+        .p2 { color: #3C3489; border-color: #AFA9EC; background: #EEEDFE; }
+        .p3 { color: #633806; border-color: #FAC775; background: #FAEEDA; }
+        .p4 { color: #0C447C; border-color: #85B7EB; background: #E6F1FB; }
+
+        /* Animated prompt lines */
+        @keyframes typeLine {
+            0% { width: 0; opacity: 0; }
+            10% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+        .pc-line { animation: typeLine 0.6s ease-out forwards; opacity: 0; }
+        .pc-line:nth-child(1) { animation-delay: 0.2s; }
+        .pc-line:nth-child(2) { animation-delay: 0.4s; }
+        .pc-line:nth-child(3) { animation-delay: 0.6s; }
+        .pc-line:nth-child(4) { animation-delay: 0.8s; }
+        .pc-line:nth-child(5) { animation-delay: 1.0s; }
+        .pc-line:nth-child(6) { animation-delay: 1.2s; }
+        .pc-line:nth-child(7) { animation-delay: 1.4s; }
+
+        /* Animated arrows */
+        @keyframes slideIn { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+        .conn-arrow { transform-origin: left; animation: slideIn 0.5s ease-out forwards; animation-delay: 1.6s; transform: scaleX(0); }
+        .c-out .conn-arrow { animation-delay: 2.0s; }
+
+        /* Diagram fade in */
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(12px); } 100% { opacity: 1; transform: translateY(0); } }
+        .diagram-card { animation: fadeUp 0.6s ease-out forwards; animation-delay: 2.3s; opacity: 0; }
+
+        /* Install section */
         .install {
             background: var(--accent-light);
             border-radius: 12px;
-            padding: 28px 32px;
-            margin: 40px 0;
+            padding: 24px 28px;
+            margin: 36px 0;
         }
+        .install strong { font-size: 0.9rem; }
         .install code {
             display: block;
-            font-size: 0.95rem;
-            margin: 8px 0;
+            font-size: 0.88rem;
+            margin: 6px 0;
             color: var(--accent);
+            font-family: 'SF Mono', 'Fira Code', monospace;
         }
 
-        /* Story */
-        .story { padding: 60px 0; }
-        .story h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        .story p {
-            margin-bottom: 16px;
-            color: #333;
-        }
+        /* Story sections */
+        .story { padding: 48px 0; }
+        .story h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 16px; }
+        .story p { margin-bottom: 14px; color: #333; }
 
-        /* Problem/Solution */
+        /* Insight box */
         .insight {
             border-left: 3px solid var(--accent);
-            padding: 20px 24px;
-            background: var(--code-bg);
-            border-radius: 0 8px 8px 0;
-            margin: 32px 0;
-        }
-        .insight code {
-            font-size: 0.9rem;
+            padding: 18px 22px;
             background: #fff;
+            border-radius: 0 10px 10px 0;
+            margin: 28px 0;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+        }
+        .insight strong { display: block; margin-bottom: 8px; }
+        .insight code {
+            font-size: 0.85rem;
+            background: var(--accent-light);
             padding: 2px 6px;
             border-radius: 3px;
         }
 
-        /* Features */
+        /* Features grid */
         .features {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            gap: 20px;
             padding: 40px 0;
         }
-        @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) {
+            .features { grid-template-columns: 1fr; }
+            .card-content { flex-direction: column; gap: 16px; padding: 20px 16px; }
+            .prompt-card { width: 100%; }
+            .conn { transform: rotate(90deg); padding: 8px 0; }
+            .card-bottom { flex-direction: column; gap: 12px; text-align: center; }
+            .pills { justify-content: center; max-width: none; }
+        }
         .feature {
-            padding: 20px;
+            padding: 18px;
             border: 1px solid var(--border);
             border-radius: 10px;
+            background: #fff;
         }
-        .feature h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .feature p {
-            font-size: 0.92rem;
-            color: var(--muted);
-        }
+        .feature h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+        .feature p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
 
         /* Roadmap */
         .roadmap { padding: 40px 0 60px; }
-        .roadmap h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 20px; }
-        .roadmap ul { list-style: none; padding: 0; }
-        .roadmap li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
+        .roadmap h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 16px; }
+        .roadmap ul { list-style: none; }
+        .roadmap li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
         .roadmap li:last-child { border-bottom: none; }
         .tag {
-            display: inline-block;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: var(--accent-light);
-            color: var(--accent);
-            font-weight: 500;
-            margin-right: 8px;
+            display: inline-block; font-size: 0.7rem; padding: 2px 8px;
+            border-radius: 4px; font-weight: 500; margin-right: 8px;
         }
+        .tag-next { background: var(--green-light); color: #085041; }
+        .tag-planned { background: var(--accent-light); color: var(--accent); }
 
         /* Footer */
         footer {
             border-top: 1px solid var(--border);
-            padding: 32px 0;
+            padding: 28px 0;
             text-align: center;
-            color: var(--muted);
-            font-size: 0.9rem;
+            color: var(--light);
+            font-size: 0.88rem;
         }
         footer a { color: var(--accent); text-decoration: none; }
         footer a:hover { text-decoration: underline; }
-
-        a { color: var(--accent); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <section class="hero">
-        <h1>AWS Architecture Diagram Skill</h1>
-        <p class="subtitle">Generate editable .drawio diagrams from a text prompt. Verified AWS icons. Left-to-right layout. Zero dependencies.</p>
-        <img src="https://raw.githubusercontent.com/vidanov/aws-architecture-diagram-skill/main/docs/hero.png" alt="Prompt to AI Agent to .drawio diagram" class="hero-img">
+    <section class="hero-section">
+        <div class="hero-card">
+            <div class="topbar">
+                <div class="logo">
+                    <div class="logo-mark">⬡</div>
+                    <span class="logo-text">aws-architecture-diagram-skill</span>
+                </div>
+                <div class="topbadges">
+                    <span class="tbadge b-mit">MIT</span>
+                    <span class="tbadge b-kiro">Kiro CLI</span>
+                    <span class="tbadge b-cc">Claude Code</span>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="prompt-card">
+                    <div class="pc-bar">
+                        <div class="pcdot" style="background:#E24B4A"></div>
+                        <div class="pcdot" style="background:#EF9F27"></div>
+                        <div class="pcdot" style="background:#639922"></div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="pc-line hi" style="width:90%"></div>
+                        <div class="pc-line" style="width:75%"></div>
+                        <div class="pc-line hi" style="width:82%"></div>
+                        <div class="pc-line" style="width:60%"></div>
+                        <div class="pc-line" style="width:78%"></div>
+                        <div class="pc-line hi" style="width:68%"></div>
+                        <div class="pc-line" style="width:85%"></div>
+                    </div>
+                </div>
+                <div class="conn c-in">
+                    <div class="conn-lbl">prompt</div>
+                    <div class="conn-arrow"></div>
+                </div>
+                <div class="agent">
+                    <div class="orb">
+                        <div class="orb-t">AI<br>Agent</div>
+                        <div class="orb-s">+ skill</div>
+                    </div>
+                    <div class="agent-lbl">Kiro / Claude Code</div>
+                </div>
+                <div class="conn c-out">
+                    <div class="conn-lbl">generates</div>
+                    <div class="conn-arrow"></div>
+                </div>
+                <div class="diagram-card">
+                    <div class="dc-bar">
+                        <div class="dc-filename"><div class="dc-dot"></div>Serverless API</div>
+                        <div class="dc-pill">.drawio</div>
+                    </div>
+                    <div class="dc-img">
+                        <img src="https://raw.githubusercontent.com/vidanov/aws-architecture-diagram-skill/main/docs/example-serverless-api.png" alt="Serverless API diagram">
+                    </div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <div>
+                    <div class="tagline">AWS Architecture Diagram Skill</div>
+                    <div class="tagline-sub">Prompt → production-ready .drawio · 270+ verified icons · zero dependencies</div>
+                </div>
+                <div class="pills">
+                    <span class="pill p1">270+ AWS icons</span>
+                    <span class="pill p2">Kiro + Claude Code</span>
+                    <span class="pill p3">Zero deps</span>
+                    <span class="pill p4">Editable .drawio</span>
+                </div>
+            </div>
+        </div>
     </section>
 
     <div class="install">
-        <strong>Install in Claude Code:</strong>
+        <strong>Claude Code:</strong>
         <code>/plugin marketplace add vidanov/aws-architecture-diagram-skill</code>
         <code>/plugin install aws-architecture-diagram@vidanov-skills</code>
         <br>
-        <strong>Install in Kiro CLI:</strong>
+        <strong>Kiro CLI:</strong>
         <code>cp kiro/SKILL.md ~/.kiro/skills/aws-architecture-diagram/SKILL.md</code>
     </div>
 
@@ -178,7 +336,8 @@
     </section>
 
     <div class="insight">
-        <strong>The discovery that makes it work:</strong> draw.io's AWS library has two icon patterns with opposite <code>strokeColor</code> rules. Service-level icons need <code>#ffffff</code>. Resource-level icons need <code>none</code>. Every AI tool I tested mixed these up, producing empty colored squares. Documenting which pattern each of the 270+ icons uses is what makes this skill produce correct output.
+        <strong>The discovery that makes it work</strong>
+        draw.io's AWS library has two icon patterns with opposite <code>strokeColor</code> rules. Service-level icons need <code>#ffffff</code>. Resource-level icons need <code>none</code>. Every AI tool I tested mixed these up, producing empty colored squares. Documenting which pattern each of the 270+ icons uses is what makes this skill produce correct output.
     </div>
 
     <section class="story">
@@ -218,12 +377,12 @@
     <section class="roadmap">
         <h2>Roadmap</h2>
         <ul>
-            <li><span class="tag">next</span> Multiple visual styles for the same architecture (technical, business, branded)</li>
-            <li><span class="tag">next</span> Improved reference templates with production-quality layout</li>
-            <li><span class="tag">planned</span> Company-specific style presets (custom colors, logo placement, naming conventions)</li>
-            <li><span class="tag">planned</span> Multi-page diagrams: overview + detail pages</li>
-            <li><span class="tag">planned</span> Cost annotations on services</li>
-            <li><span class="tag">planned</span> CI/CD, data lake, and microservices templates</li>
+            <li><span class="tag tag-next">next</span>Multiple visual styles for the same architecture (technical, business, branded)</li>
+            <li><span class="tag tag-next">next</span>Improved reference templates with production-quality layout</li>
+            <li><span class="tag tag-planned">planned</span>Company-specific style presets (custom colors, logo placement, naming conventions)</li>
+            <li><span class="tag tag-planned">planned</span>Multi-page diagrams: overview + detail pages</li>
+            <li><span class="tag tag-planned">planned</span>Cost annotations on services</li>
+            <li><span class="tag tag-planned">planned</span>CI/CD, data lake, and microservices templates</li>
         </ul>
     </section>
 </div>
