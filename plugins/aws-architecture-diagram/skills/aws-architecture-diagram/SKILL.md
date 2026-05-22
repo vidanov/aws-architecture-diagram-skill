@@ -102,6 +102,37 @@ sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffff
 - External systems → use `shape=mxgraph.aws4.traditional_server`
 - Browsers/clients → use `shape=mxgraph.aws4.client`
 
+## Audience Mode
+
+Before generating, assess the target audience:
+- **Technical**: Use service names, protocol labels (HTTPS, gRPC), CIDR blocks, instance types
+- **Non-technical**: Use action labels ("Store Data", "Send Notification"), hide implementation details, use numbered flow (① ② ③)
+
+If unclear, ask: "Technical audience or executive/non-technical?"
+
+### Numbered flow edges (for non-technical mode)
+Instead of technical labels, show flow order with circled numbers:
+- Flow A: ① → ② → ③ → ④ (white circled numbers)
+- Flow B: ❶ → ❷ → ❸ → ❹ (black circled numbers for second flow)
+
+Use edge labels: `value="①"` with `fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;`
+
+## Companion Guide
+
+After generating the .drawio file, also generate a markdown guide:
+- Same filename with `.md` extension
+- Contents: diagram title, flow description (numbered steps), service list with purpose, key design decisions
+
+## Validation Step
+
+After generating XML, verify:
+1. Every `resIcon=` value exists in the reference files
+2. Service-level icons have `strokeColor=#ffffff`
+3. Resource-level icons have `strokeColor=none`
+4. No XML comments present
+5. All cell IDs are unique
+6. Every edge has `<mxGeometry relative="1" as="geometry" />`
+
 ## Export
 
 For PNG/SVG/PDF export using draw.io Desktop CLI:

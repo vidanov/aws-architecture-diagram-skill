@@ -74,6 +74,34 @@ Since draw.io XML can be large, split creation across multiple tool calls:
 3. Right side (ingest, messaging, data sources)
 4. Bottom (optional/outbound flows) + close XML
 
+### Audience Mode
+Before generating, assess the target audience:
+- **Technical**: Use service names, protocol labels (HTTPS, gRPC), CIDR blocks, instance types
+- **Non-technical**: Use action labels ("Store Data", "Send Notification"), hide implementation details, use numbered flow (① ② ③)
+
+If unclear, ask: "Technical audience or executive/non-technical?"
+
+### Numbered Flow Edges (for non-technical mode)
+Instead of technical labels, show flow order with circled numbers:
+- Flow A: ① → ② → ③ → ④ (white circled numbers)
+- Flow B: ❶ → ❷ → ❸ → ❹ (black circled numbers for second flow)
+
+Use edge labels: `value="①"` with `fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;`
+
+### Companion Guide
+After generating the .drawio file, also generate a markdown guide:
+- Same filename with `.md` extension (e.g., `serverless-api.drawio` + `serverless-api.md`)
+- Contents: diagram title, flow description (numbered steps matching edge labels), service list with purpose, key design decisions
+
+### Validation Step
+After generating XML, mentally verify:
+1. Every `resIcon=` value exists in the reference files
+2. Service-level icons have `strokeColor=#ffffff`
+3. Resource-level icons have `strokeColor=none`
+4. No XML comments present
+5. All cell IDs are unique
+6. Every edge has `<mxGeometry relative="1" as="geometry" />`
+
 ### Output
 - Save with descriptive filename ending in `.drawio`
 - Open with `open` command (macOS) or `xdg-open` (Linux) after creation
