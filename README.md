@@ -115,7 +115,9 @@ These `resIcon` values do NOT render in draw.io — avoid them:
 - `mxgraph.aws4.dynamodb_stream` → use `mxgraph.aws4.dynamodb` with label
 - `mxgraph.aws4.general_saml_token` → use `mxgraph.aws4.traditional_server`
 
-## How This Compares
+---
+
+## Comparison with Alternatives
 
 | Solution | Type | Output | Editable | Zero-deps | Verified Icons |
 |----------|------|--------|----------|-----------|----------------|
@@ -126,12 +128,12 @@ These `resIcon` values do NOT render in draw.io — avoid them:
 | [carlosmgv02/diagram-ai-generator](https://github.com/carlosmgv02/diagram-ai-generator) | MCP Server | Multi-cloud | ❌ | ❌ (MCP) | ❌ |
 | [clouda.ai](https://clouda.ai/) | SaaS | PNG | ❌ | N/A | N/A |
 
-**Key differentiators:**
-- **Zero dependencies** — just a markdown file, no MCP server, no Python, no GraphViz
-- **Editable output** — native `.drawio` XML you can open and modify in draw.io
-- **Verified icon catalog** — documents which `mxgraph.aws4.*` icons actually render vs. silently break
-- **Opinionated layout** — left-to-right flow with consistent spacing (not random placement)
-- **Dual platform** — works in both Kiro CLI and Claude Code
+**Why this approach wins:**
+- No runtime dependencies. It's a markdown file, not a server.
+- Output is native `.drawio` XML you can open, edit, and version-control.
+- Verified icon catalog documents which `mxgraph.aws4.*` names actually render vs. silently break.
+- Opinionated layout: left-to-right flow with consistent spacing, not random placement.
+- Works in both Kiro CLI and Claude Code.
 
 ## License
 
