@@ -485,6 +485,10 @@
                 <td>Agent Skill</td><td>.drawio</td><td>✅</td><td>✅</td><td>✅</td>
             </tr>
             <tr>
+                <td>Claude Code / Kiro (no skill)</td>
+                <td>Raw LLM generation</td><td>.drawio</td><td>✅</td><td>✅</td><td>❌</td>
+            </tr>
+            <tr>
                 <td><a href="https://github.com/jgraph/drawio-mcp">jgraph/drawio-mcp</a></td>
                 <td>MCP Server + Skill</td><td>.drawio</td><td>✅</td><td>❌ (MCP)</td><td>❌</td>
             </tr>
@@ -505,6 +509,10 @@
                 <td>SaaS</td><td>PNG</td><td>❌</td><td>N/A</td><td>N/A</td>
             </tr>
         </table>
+        <div class="insight" style="margin-top: 24px;">
+            <strong>Why "raw generation" without a skill fails</strong>
+            Without the skill, Claude Code and Kiro can still produce .drawio XML, but they hallucinate icon names, mix up the two strokeColor patterns, use random placement, and produce 30-50% broken icons. You spend more time fixing the output than you saved generating it. The skill eliminates these issues by constraining the AI to verified icon names, correct patterns, and opinionated layout rules.
+        </div>
     </section>
 
     <section class="roadmap">
