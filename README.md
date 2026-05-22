@@ -63,14 +63,32 @@ aws-architecture-diagram-skill/
 ├── README.md
 ├── LICENSE
 ├── kiro/
-│   └── SKILL.md          # Kiro CLI version
+│   └── SKILL.md                        # Kiro CLI version
 ├── claude/
-│   └── SKILL.md          # Claude Code version
+│   └── SKILL.md                        # Claude Code version
 └── references/
-    └── icon-styles.md    # Verified icon catalog & color palette
+    ├── aws-icons-compute.md            # Lambda, EC2, ECS, EKS, Fargate (25+ icons)
+    ├── aws-icons-database.md           # DynamoDB, RDS, Aurora, ElastiCache (40+ icons)
+    ├── aws-icons-integration.md        # API GW, SQS, SNS, EventBridge, Step Functions (35+ icons)
+    ├── aws-icons-networking.md         # CloudFront, Route 53, VPC, ELB (40+ icons)
+    ├── aws-icons-storage.md            # S3, EFS, EBS, Glacier, Backup (40+ icons)
+    ├── aws-icons-security.md           # IAM, Cognito, KMS, WAF, Shield (45+ icons)
+    ├── aws-icons-analytics-ml.md       # Kinesis, Athena, Bedrock, SageMaker (45+ icons)
+    └── aws-icons-common.md             # Groups, general resources, edge styles, base template
 ```
 
-## Supported Services
+## Key Insight: Two Icon Patterns
+
+draw.io AWS icons have **two patterns** with opposite `strokeColor` rules:
+
+| Pattern | Style | strokeColor | Use for |
+|---------|-------|-------------|---------|
+| Service-level | `shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<name>` | `#ffffff` (REQUIRED) | Main service icons (colored square + white glyph) |
+| Resource-level | `shape=mxgraph.aws4.<name>` | `none` (REQUIRED) | Sub-resources (silhouette icons) |
+
+**Confusing these patterns is the #1 cause of broken icons in AI-generated diagrams.**
+
+## Supported Services (270+ icons)
 
 | Category | Icons |
 |----------|-------|
