@@ -20,7 +20,7 @@ fillColor: `#8C4FFF` | strokeColor: `#ffffff`
 | `data_pipeline` | Data Pipeline |
 | `lake_formation` | Lake Formation |
 | `msk` | MSK |
-| `opensearch` | OpenSearch |
+| `elasticsearch_service` | OpenSearch Service |
 | `datazone` | DataZone |
 | `clean_rooms` | Clean Rooms |
 | `finspace` | FinSpace |
