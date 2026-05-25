@@ -120,6 +120,25 @@ draw.io AWS icons have **two patterns** with opposite `strokeColor` rules:
 
 **Confusing these patterns is the #1 cause of broken icons in AI-generated diagrams.**
 
+## Key Insight: Legacy Stencil Names
+
+draw.io stencil names don't always match current AWS service names. Renamed services keep their old stencil identifiers:
+
+| AWS Service | draw.io `resIcon` | Reason |
+|---|---|---|
+| Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch (2021) |
+
+**Empty icon = wrong stencil name.** The skill includes a verified icon catalog to prevent this.
+
+## Two-Step Edit Approach
+
+The skill instructs the AI agent to:
+1. Generate the `.drawio` XML
+2. Export to PNG and visually review for broken icons or layout issues
+3. Fix and re-export
+
+This catches rendering problems that are invisible in raw XML.
+
 ## Supported Services (270+ icons)
 
 | Category | Icons |
