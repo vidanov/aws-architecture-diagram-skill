@@ -160,6 +160,25 @@ After generating the .drawio file, also generate a markdown guide:
 - Same filename with `.md` extension
 - Contents: diagram title, flow description (numbered steps), service list with purpose, key design decisions
 
+## Two-Step Edit Approach
+After generating the initial .drawio file:
+1. **Export to PNG** using the draw.io CLI (see Export section)
+2. **Review the PNG** visually — check for empty/broken icons, overlapping edges, misaligned labels
+3. **Fix issues** in the .drawio XML and re-export
+
+This catches rendering problems (wrong stencil names, broken styles) that are invisible in raw XML.
+
+## Icon Name Gotchas — CRITICAL
+draw.io stencil names do NOT always match current AWS service names. Services that were renamed keep their legacy stencil names:
+
+| AWS Service Name | draw.io resIcon name | Why |
+|---|---|---|
+| Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch in 2021 |
+| Amazon EventBridge | `eventbridge` | Was CloudWatch Events |
+| AWS Fargate | `fargate` | Correct |
+
+**Rule:** Always verify icon names from the reference files. If a service icon renders as an empty box, the stencil name is wrong. Check the draw.io source at `src/main/webapp/js/diagramly/sidebar/Sidebar-AWS4.js` for the canonical name.
+
 ## Validation Step
 
 After generating XML, verify:
@@ -169,6 +188,7 @@ After generating XML, verify:
 4. No XML comments present
 5. All cell IDs are unique
 6. Every edge has `<mxGeometry relative="1" as="geometry" />`
+7. No icon uses a guessed stencil name — all verified against reference files
 
 ## Export
 
