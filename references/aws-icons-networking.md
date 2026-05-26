@@ -52,6 +52,7 @@ fillColor: `#8C4FFF` | strokeColor: `none`
 | `vpn_connection` | VPN Connection |
 | `customer_gateway` | Customer Gateway |
 | `peering_connection` | Peering Connection |
+| `peering` | VPC Peering (renders glyph) |
 | `flow_logs` | VPC Flow Logs |
 | `transit_gateway_attachment` | Transit Gateway Attachment |
 | `transit_gateway_route_table` | Transit Gateway Route Table |

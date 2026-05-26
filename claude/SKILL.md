@@ -189,12 +189,20 @@ draw.io stencil names do NOT always match current AWS service names. Services th
 
 | AWS Service Name | draw.io resIcon name | Why |
 |---|---|---|
-| Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch in 2021 |
+| Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch in 2021; `opensearch_service` also works |
 | Amazon EventBridge | `eventbridge` | Was CloudWatch Events |
 | AWS Fargate | `fargate` | Correct |
 | VPC Peering | `peering` | Resource-level: `shape=mxgraph.aws4.peering;strokeColor=none` — NOT `vpc_peering` or `peering_connection` (those render as blank squares) |
+| Amazon MSK | `managed_streaming_for_kafka` | NOT `msk` (renders as blank square) |
+| IAM Identity Center | `single_sign_on` | NOT `iam_identity_center` (renders as blank square) |
 
 **Rule:** Always verify icon names from the reference files. If a service icon renders as an empty box, the stencil name is wrong. Check the draw.io source at `src/main/webapp/js/diagramly/sidebar/Sidebar-AWS4.js` for the canonical name.
+
+**Fallback for unmapped services:** If a service is NOT found in any reference file, use this generic AWS cloud icon with the service name as label:
+```
+sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#232F3E;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.general_AWScloud
+```
+Never render an unknown service as a plain colored rectangle with no label.
 
 ## Validation Step
 

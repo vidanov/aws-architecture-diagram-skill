@@ -19,7 +19,7 @@ fillColor: `#8C4FFF` | strokeColor: `#ffffff`
 | `glue` | Glue |
 | `data_pipeline` | Data Pipeline |
 | `lake_formation` | Lake Formation |
-| `msk` | MSK |
+| `managed_streaming_for_kafka` | MSK |
 | `elasticsearch_service` | OpenSearch Service |
 | `datazone` | DataZone |
 | `clean_rooms` | Clean Rooms |
