@@ -29,9 +29,24 @@ Generate a draw.io (.drawio) XML file representing an AWS architecture diagram.
 ### Icon Style
 - Icons are from draw.io's built-in `mxgraph.aws4` stencil library — the **official AWS Architecture Icons** (https://aws.amazon.com/architecture/icons/, updated quarterly)
 - Icon size: **78x78px** for main services, **65x65px** for secondary
-- Use `sketch=0` on all icons
+- Use `sketch=0;outlineConnect=0;` on all icons
 - Use `strokeColor=#ffffff` on all AWS service icons
+- **MUST include `fillColor`** — without it, icons render as invisible/white in PNG export
 - Font size: **12px** for labels
+- Always include: `fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;aspect=fixed;`
+
+**fillColor by AWS service category:**
+| Category | fillColor | Services |
+|----------|-----------|----------|
+| Compute | `#ED7100` | Lambda, EC2, ECS, EKS, Fargate |
+| Networking | `#8C4FFF` | VPC, ELB, CloudFront, Route 53, API Gateway |
+| Database | `#C925D1` | RDS, DynamoDB, Aurora, ElastiCache |
+| Storage | `#3F8624` | S3, EFS, EBS |
+| Security | `#DD344C` | IAM, Cognito, KMS, WAF |
+| Integration | `#E7157B` | SQS, SNS, EventBridge, Step Functions |
+| Analytics | `#8C4FFF` | Kinesis, Athena, Redshift |
+| Management | `#E7157B` | CloudWatch, CloudTrail |
+| AI/ML | `#01A88D` | Bedrock, SageMaker |
 
 ### Edge Style — CRITICAL FOR CLEAN DIAGRAMS
 
@@ -67,6 +82,14 @@ edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;s
 - Dashed black (`strokeWidth=2;dashed=1;`): optional/async path
 - Dashed red (`strokeWidth=2;dashed=1;strokeColor=#DD344C;`): error path
 
+**Edge attachment (CRITICAL — fixes "green cross" problem):**
+- Every edge MUST have both `source="<cell-id>"` and `target="<cell-id>"` attributes referencing valid cell IDs
+- NEVER create floating/unattached edges — all edges must be bound to shapes at both ends
+- Always include `exitX/exitY` and `entryX/entryY` to define exact connection points on the shape perimeter
+- In draw.io, properly attached edges show a "blue dot" anchor; unattached edges show a "green cross"
+- If an edge connects to a child inside a container, reference the child's ID directly (not the container)
+- **Cross-container edges:** When source and target are in different containers, set the edge's `parent="1"` (root layer) so draw.io can route it across boundaries
+
 **When NOT to label edges:**
 - If the flow is obvious from context (e.g., Lambda → DynamoDB doesn't need "Write")
 - If the icon labels already explain the relationship
@@ -75,13 +98,15 @@ edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;s
 ### Two Icon Patterns — CRITICAL
 
 **Pattern 1: Service-level (resourceIcon frame)**
-- Style: `shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<name>`
+- Style: `sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=<CATEGORY_COLOR>;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<name>`
 - **MUST use `strokeColor=#ffffff`** — without it, the white glyph disappears
+- **MUST use `fillColor=<color>`** — without it, icon renders as white/invisible square in PNG export
 - Size: 78x78
 
 **Pattern 2: Resource-level (standalone shape)**
-- Style: `shape=mxgraph.aws4.<name>` directly (no resIcon)
+- Style: `sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=<CATEGORY_COLOR>;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.<name>`
 - **MUST use `strokeColor=none`** — using #ffffff breaks these
+- **MUST use `fillColor=<color>`** — same reason as above
 - Size: 78x78 or 48x48
 
 **Confusing these patterns guarantees broken icons.**
@@ -99,11 +124,29 @@ edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;s
 **Always look up icons from reference files. Never guess icon names.**
 
 ### Group Boundaries
-- **AWS Cloud:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none`
-- **Account:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_account;strokeColor=#CD2264;fillColor=none`
-- **On-premise:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_on_premise;strokeColor=#5A6C86;fillColor=none`
-- **Logical groups:** Simple dashed boxes: `whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8`
+- **AWS Cloud:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;container=1;dropTarget=1;`
+- **Account:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_account;strokeColor=#CD2264;fillColor=none;container=1;dropTarget=1;`
+- **On-premise:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_on_premise;strokeColor=#5A6C86;fillColor=none;container=1;dropTarget=1;`
+- **VPC:** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc2;strokeColor=#8C4FFF;fillColor=none;container=1;dropTarget=1;`
+- **Subnet (public):** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;strokeColor=#7AA116;fillColor=none;container=1;dropTarget=1;`
+- **Subnet (private):** `shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;strokeColor=#147EBA;fillColor=none;container=1;dropTarget=1;`
+- **Logical groups:** Simple dashed boxes: `whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8;container=1;dropTarget=1;`
 - **NO colored backgrounds** on group boxes — always `fillColor=none`
+
+**Container nesting (CRITICAL for grouping):**
+- ALL boundary/group shapes MUST include `container=1;dropTarget=1;` in their style
+- Child cells inside a boundary MUST set `parent="<boundary-cell-id>"` instead of `parent="1"`
+- This ensures moving a boundary moves all its children together
+- Example:
+```xml
+<mxCell id="vpc1" value="VPC" style="shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc2;strokeColor=#8C4FFF;fillColor=none;container=1;dropTarget=1;" vertex="1" parent="1">
+  <mxGeometry x="100" y="100" width="800" height="500" as="geometry" />
+</mxCell>
+<mxCell id="lambda1" value="Lambda" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;strokeColor=#ffffff;" vertex="1" parent="vpc1">
+  <mxGeometry x="50" y="50" width="78" height="78" as="geometry" />
+</mxCell>
+```
+Note: child geometry coordinates are **relative to the parent container**, not the canvas.
 
 ### PNG Export Background Fix
 Place a full-canvas rectangle as the FIRST element (lowest z-order):
@@ -174,6 +217,7 @@ draw.io stencil names do NOT always match current AWS service names. Services th
 | Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch in 2021 |
 | Amazon EventBridge | `eventbridge` | Was CloudWatch Events |
 | AWS Fargate | `fargate` | Correct |
+| VPC Peering | `vpc_peering` / `peering_connection` | Both resource-level shapes exist but render as blank squares in CLI export. Use service-level `resIcon=mxgraph.aws4.transit_gateway` as visual alternative, or accept the colored square with label |
 
 **Rule:** Always verify icon names from the reference files. If a service icon renders as an empty box, the stencil name is wrong. Check the draw.io source at `src/main/webapp/js/diagramly/sidebar/Sidebar-AWS4.js` for the canonical name.
 
@@ -186,6 +230,9 @@ After generating XML, mentally verify:
 5. All cell IDs are unique
 6. Every edge has `<mxGeometry relative="1" as="geometry" />`
 7. No icon uses a guessed stencil name — all verified against reference files
+8. Every edge has both `source` and `target` attributes referencing valid cell IDs (no floating edges)
+9. All group/boundary shapes include `container=1;dropTarget=1;` in their style
+10. Children inside boundaries use `parent="<boundary-id>"` (not `parent="1"`)
 
 ### Output
 - Save with descriptive filename ending in `.drawio`

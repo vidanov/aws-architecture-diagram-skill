@@ -63,6 +63,12 @@ edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;s
 - Dashed (`strokeWidth=2;dashed=1;`): optional/async
 - Red dashed (`strokeWidth=2;dashed=1;strokeColor=#DD344C;`): error path
 
+**Edge attachment (CRITICAL — fixes "green cross" problem):**
+- Every edge MUST have both `source="<cell-id>"` and `target="<cell-id>"` attributes referencing valid cell IDs
+- NEVER create floating/unattached edges — all edges must be bound to shapes at both ends
+- Always include `exitX/exitY` and `entryX/entryY` to define exact connection points on the shape perimeter
+- **Cross-container edges:** When source and target are in different containers, set the edge's `parent="1"`
+
 ## PNG Export Background
 First element after root cells (lowest z-order):
 ```xml
@@ -125,6 +131,16 @@ sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffff
 | Account | `mxgraph.aws4.group_account` | `#CD2264` |
 | On-premise | `mxgraph.aws4.group_on_premise` | `#5A6C86` |
 | Corporate DC | `mxgraph.aws4.group_corporate_data_center` | `#388E3C` |
+| VPC | `mxgraph.aws4.group_vpc2` | `#8C4FFF` |
+| Subnet (public) | `mxgraph.aws4.group_security_group` | `#7AA116` |
+| Subnet (private) | `mxgraph.aws4.group_security_group` | `#147EBA` |
+
+**Container nesting (CRITICAL for grouping):**
+- ALL group/boundary shapes MUST include `container=1;dropTarget=1;` in their style
+- Child cells inside a boundary MUST set `parent="<boundary-cell-id>"` instead of `parent="1"`
+- This ensures moving a boundary moves all its children together
+- Child geometry coordinates are **relative to the parent container**, not the canvas
+- **Cross-container edges:** When source and target are in different containers, set the edge's `parent="1"`
 
 ## BROKEN Icons — DO NOT USE
 
@@ -176,6 +192,7 @@ draw.io stencil names do NOT always match current AWS service names. Services th
 | Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch in 2021 |
 | Amazon EventBridge | `eventbridge` | Was CloudWatch Events |
 | AWS Fargate | `fargate` | Correct |
+| VPC Peering | `vpc_peering` / `peering_connection` | Both resource-level shapes exist but render as blank squares in CLI export. Use service-level `resIcon=mxgraph.aws4.transit_gateway` as visual alternative, or accept the colored square with label |
 
 **Rule:** Always verify icon names from the reference files. If a service icon renders as an empty box, the stencil name is wrong. Check the draw.io source at `src/main/webapp/js/diagramly/sidebar/Sidebar-AWS4.js` for the canonical name.
 
@@ -189,6 +206,9 @@ After generating XML, verify:
 5. All cell IDs are unique
 6. Every edge has `<mxGeometry relative="1" as="geometry" />`
 7. No icon uses a guessed stencil name — all verified against reference files
+8. Every edge has both `source` and `target` attributes referencing valid cell IDs (no floating edges)
+9. All group/boundary shapes include `container=1;dropTarget=1;` in their style
+10. Children inside boundaries use `parent="<boundary-id>"` (not `parent="1"`)
 
 ## Export
 
