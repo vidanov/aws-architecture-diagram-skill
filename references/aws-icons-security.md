@@ -10,8 +10,7 @@ fillColor: `#DD344C` | strokeColor: `#ffffff`
 | `guardduty` | GuardDuty |
 | `inspector` | Inspector |
 | `macie` | Macie |
-| `iam_identity_center` | IAM Identity Center |
-| `single_sign_on` | IAM Identity Center (SSO) |
+| `single_sign_on` | IAM Identity Center |
 | `certificate_manager_3` | Certificate Manager |
 | `cloud_hsm` | CloudHSM |
 | `directory_service` | Directory Service |
