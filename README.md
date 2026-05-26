@@ -139,7 +139,7 @@ The skill instructs the AI agent to:
 
 This catches rendering problems that are invisible in raw XML.
 
-## Supported Services (270+ icons)
+## Supported Services (110+ icons)
 
 | Category | Icons |
 |----------|-------|
