@@ -192,7 +192,7 @@ draw.io stencil names do NOT always match current AWS service names. Services th
 | Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch in 2021 |
 | Amazon EventBridge | `eventbridge` | Was CloudWatch Events |
 | AWS Fargate | `fargate` | Correct |
-| VPC Peering | `vpc_peering` / `peering_connection` | Both resource-level shapes exist but render as blank squares in CLI export. Use service-level `resIcon=mxgraph.aws4.transit_gateway` as visual alternative, or accept the colored square with label |
+| VPC Peering | `peering` | Resource-level: `shape=mxgraph.aws4.peering;strokeColor=none` — NOT `vpc_peering` or `peering_connection` (those render as blank squares) |
 
 **Rule:** Always verify icon names from the reference files. If a service icon renders as an empty box, the stencil name is wrong. Check the draw.io source at `src/main/webapp/js/diagramly/sidebar/Sidebar-AWS4.js` for the canonical name.
 
