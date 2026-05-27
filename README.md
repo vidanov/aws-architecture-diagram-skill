@@ -4,7 +4,7 @@
 
 ![Prompt → AI Agent + Skill → .drawio diagram](docs/hero.png)
 
-A reusable skill for generating AWS architecture diagrams in draw.io format. Works with both **Kiro CLI** and **Claude Code**.
+A reusable skill for generating AWS architecture diagrams in draw.io format. Works with **any AI assistant** — ChatGPT, Claude Projects, Kiro CLI, Claude Code, or any internal AI agent that supports custom prompts and file uploads.
 
 Generates production-quality `.drawio` files using official AWS Architecture Icons with proper styling, layout, and color coding.
 
@@ -17,6 +17,22 @@ Generates production-quality `.drawio` files using official AWS Architecture Ico
 - **Export support** — PNG/SVG/PDF via draw.io Desktop CLI with embedded XML
 
 ## Installation
+
+### Any AI Assistant (ChatGPT, Claude Projects, Internal Agents)
+
+No code or CLI required. Works with any AI that supports custom instructions and file uploads:
+
+1. **Copy the prompt** from [`chatgpt/PROMPT.md`](chatgpt/PROMPT.md) into your assistant's system prompt / custom instructions field
+2. **Upload the reference files** from [`chatgpt/references/`](chatgpt/references/) to the knowledge base / project files
+3. **Start asking** for AWS architecture diagrams
+
+This works with:
+- **ChatGPT** → Custom GPT or Project with instructions + files
+- **Claude Projects** → Project instructions + project knowledge
+- **Internal corporate AI agents** → System prompt + knowledge base uploads
+- **Any LLM with file context** → Paste prompt + reference content
+
+> **Tip:** Use GPT-4o or Claude Sonnet/Opus for best results. Set temperature to 0.3 for consistent XML output.
 
 ### Claude Code (Plugin — recommended)
 
@@ -94,6 +110,18 @@ Create an AWS architecture diagram as PNG for a real-time data pipeline with Kin
 aws-architecture-diagram-skill/
 ├── README.md
 ├── LICENSE
+├── chatgpt/
+│   ├── PROMPT.md                       # Universal prompt (ChatGPT, Claude Projects, any AI)
+│   └── references/                     # Same icons in .txt format for upload
+│       ├── aws-icons-common.txt
+│       ├── aws-icons-compute.txt
+│       ├── aws-icons-database.txt
+│       ├── aws-icons-integration.txt
+│       ├── aws-icons-networking.txt
+│       ├── aws-icons-storage.txt
+│       ├── aws-icons-security.txt
+│       ├── aws-icons-analytics-ml.txt
+│       └── aws-icons-iot-migration-devtools.txt
 ├── kiro/
 │   └── SKILL.md                        # Kiro CLI version
 ├── claude/
@@ -176,7 +204,7 @@ These `resIcon` values do NOT render in draw.io — avoid them:
 - Output is native `.drawio` XML you can open, edit, and version-control.
 - Verified icon catalog documents which `mxgraph.aws4.*` names actually render vs. silently break.
 - Opinionated layout: left-to-right flow with consistent spacing, not random placement.
-- Works in both Kiro CLI and Claude Code.
+- Works with any AI assistant: ChatGPT, Claude, Kiro CLI, or internal corporate agents.
 
 ## License
 
