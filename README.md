@@ -32,7 +32,7 @@ This works with:
 - **Internal corporate AI agents** → System prompt + knowledge base uploads
 - **Any LLM with file context** → Paste prompt + reference content
 
-> **Tip:** Use GPT-4o or Claude Sonnet/Opus for best results. Set temperature to 0.3 for consistent XML output.
+> **Tip:** Set temperature to 0.3 for consistent XML output.
 
 ### Claude Code (Plugin — recommended)
 
