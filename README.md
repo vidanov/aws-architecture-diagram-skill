@@ -18,6 +18,14 @@ Generates production-quality `.drawio` files using official AWS Architecture Ico
 
 ## Installation
 
+### Skills CLI (recommended — works with Claude Code, Cursor, Codex, Kiro, and 50+ agents)
+
+```bash
+npx skills add vidanov/aws-architecture-diagram-skill
+```
+
+[![skills.sh](https://skills.sh/b/vidanov/aws-architecture-diagram-skill)](https://skills.sh/vidanov/aws-architecture-diagram-skill)
+
 ### Any AI Assistant (ChatGPT, Claude Projects, Internal Agents)
 
 No code or CLI required. Works with any AI that supports custom instructions and file uploads:
