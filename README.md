@@ -24,6 +24,20 @@ Generates production-quality `.drawio` files using official AWS Architecture Ico
 npx skills add vidanov/aws-architecture-diagram-skill
 ```
 
+Install to a specific agent:
+
+```bash
+npx skills add vidanov/aws-architecture-diagram-skill --agent claude-code
+npx skills add vidanov/aws-architecture-diagram-skill --agent cursor
+npx skills add vidanov/aws-architecture-diagram-skill --agent kiro
+```
+
+Install globally (available in all projects):
+
+```bash
+npx skills add vidanov/aws-architecture-diagram-skill --global
+```
+
 [![skills.sh](https://skills.sh/b/vidanov/aws-architecture-diagram-skill)](https://skills.sh/vidanov/aws-architecture-diagram-skill)
 
 ### Any AI Assistant (ChatGPT, Claude Projects, Internal Agents)
@@ -213,6 +227,21 @@ These `resIcon` values do NOT render in draw.io — avoid them:
 - Verified icon catalog documents which `mxgraph.aws4.*` names actually render vs. silently break.
 - Opinionated layout: left-to-right flow with consistent spacing, not random placement.
 - Works with any AI assistant: ChatGPT, Claude, Kiro CLI, or internal corporate agents.
+
+## Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork** this repository
+2. **Create a branch** for your feature or fix (`git checkout -b my-feature`)
+3. **Make your changes** — add icons, fix stencil names, improve layout rules, etc.
+4. **Submit a Pull Request** with a clear description of what you changed and why
+
+You can also **open an Issue** if you:
+- Found a broken icon or wrong stencil name
+- Want to request support for a new AWS service
+- Have suggestions for layout or styling improvements
+- Encountered a bug with a specific AI agent
 
 ## License
 
