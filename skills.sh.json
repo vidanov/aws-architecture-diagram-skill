@@ -1,0 +1,10 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "groupings": [
+    {
+      "title": "AWS Architecture",
+      "description": "Generate production-quality AWS architecture diagrams in draw.io format with 270+ verified icons",
+      "skills": ["aws-architecture-diagram"]
+    }
+  ]
+}
