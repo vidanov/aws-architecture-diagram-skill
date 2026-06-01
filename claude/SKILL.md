@@ -87,6 +87,7 @@ First element after root cells (lowest z-order):
 | API Gateway | `mxgraph.aws4.api_gateway` | `#E7157B` |
 | EventBridge | `mxgraph.aws4.eventbridge` | `#E7157B` |
 | SNS | `mxgraph.aws4.sns` | `#E7157B` |
+| SES | `mxgraph.aws4.simple_email_service` | `#DD344C` |
 | Step Functions | `mxgraph.aws4.step_functions` | `#E7157B` |
 | DynamoDB | `mxgraph.aws4.dynamodb` | `#C925D1` |
 | RDS | `mxgraph.aws4.rds` | `#C925D1` |

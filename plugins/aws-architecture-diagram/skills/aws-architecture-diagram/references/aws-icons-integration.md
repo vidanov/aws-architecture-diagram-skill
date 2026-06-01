@@ -48,6 +48,17 @@ fillColor: `#E7157B` | strokeColor: `none`
 | `email_notification` | Email Notification |
 | `http_notification` | HTTP Notification |
 
+## Business Applications
+fillColor: `#DD344C` | strokeColor: `#ffffff`
+
+| resIcon | Display Name |
+|---------|-------------|
+| `simple_email_service` | SES (Simple Email Service) |
+| `pinpoint` | Pinpoint |
+| `workmail` | WorkMail |
+| `connect` | Connect |
+| `chime` | Chime |
+
 ## SQS as productIcon (70x100)
 fillColor: `#232F3E` | strokeColor: `#ffffff`
 
