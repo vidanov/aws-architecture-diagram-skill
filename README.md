@@ -29,7 +29,7 @@ Install to a specific agent:
 ```bash
 npx skills add vidanov/aws-architecture-diagram-skill --agent claude-code
 npx skills add vidanov/aws-architecture-diagram-skill --agent cursor
-npx skills add vidanov/aws-architecture-diagram-skill --agent kiro
+npx skills add vidanov/aws-architecture-diagram-skill --agent kiro-cli
 ```
 
 Install globally (available in all projects):
