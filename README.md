@@ -4,21 +4,17 @@
 
 ![Prompt → AI Agent + Skill → .drawio diagram](docs/hero.png)
 
-A reusable skill for generating AWS architecture diagrams in draw.io format. Works with **any AI assistant** — ChatGPT, Claude Projects, Kiro CLI, Claude Code, or any internal AI agent that supports custom prompts and file uploads.
+One prompt. One `.drawio` file. Every icon renders correctly because the skill carries a verified catalog of 270+ stencil names, not guesses.
 
-Generates production-quality `.drawio` files using official AWS Architecture Icons with proper styling, layout, and color coding.
+Works with any AI assistant: ChatGPT, Claude Projects, Kiro CLI, Claude Code, Cursor, or internal agents.
 
-## Features
+## The problem this solves
 
-- **Left-to-right flow** — UI/Frontend on left, data sources on right
-- **Official AWS icons** — from draw.io's built-in `mxgraph.aws4` stencil library (sourced from [AWS Architecture Icons](https://aws.amazon.com/architecture/icons/))
-- **Verified icon catalog** — only icons confirmed to render correctly
-- **Consistent styling** — 78px icons, strokeWidth=2 edges, proper AWS color palette
-- **Export support** — PNG/SVG/PDF via draw.io Desktop CLI with embedded XML
+AI agents generate broken AWS diagrams. Icons show as empty boxes because the stencil names are wrong. Layout is random. Styling is inconsistent. You spend more time fixing the output than you saved generating it.
 
-## Installation
+This skill gives the agent the correct stencil names, layout rules, and styling conventions. The output opens clean in draw.io with no manual fixes.
 
-### Skills CLI (recommended — works with Claude Code, Cursor, Codex, Kiro, and 50+ agents)
+## Quick start
 
 ```bash
 npx skills add vidanov/aws-architecture-diagram-skill
@@ -40,208 +36,144 @@ npx skills add vidanov/aws-architecture-diagram-skill --global
 
 [![skills.sh](https://skills.sh/b/vidanov/aws-architecture-diagram-skill)](https://skills.sh/vidanov/aws-architecture-diagram-skill)
 
-### Any AI Assistant (ChatGPT, Claude Projects, Internal Agents)
+<details>
+<summary><b>ChatGPT, Claude Projects, or any AI with custom instructions</b></summary>
 
-No code or CLI required. Works with any AI that supports custom instructions and file uploads:
+No CLI required:
 
-1. **Copy the prompt** from [`chatgpt/PROMPT.md`](chatgpt/PROMPT.md) into your assistant's system prompt / custom instructions field
-2. **Upload the reference files** from [`chatgpt/references/`](chatgpt/references/) to the knowledge base / project files
-3. **Start asking** for AWS architecture diagrams
+1. Copy the prompt from [`chatgpt/PROMPT.md`](chatgpt/PROMPT.md) into your system prompt or custom instructions
+2. Upload the reference files from [`chatgpt/references/`](chatgpt/references/) to the knowledge base
+3. Start asking for diagrams
 
-This works with:
-- **ChatGPT** → Custom GPT or Project with instructions + files
-- **Claude Projects** → Project instructions + project knowledge
-- **Internal corporate AI agents** → System prompt + knowledge base uploads
-- **Any LLM with file context** → Paste prompt + reference content
+> Tip: Set temperature to 0.3 for consistent XML output.
 
-> **Tip:** Set temperature to 0.3 for consistent XML output.
+</details>
 
-### Claude Code (Plugin — recommended)
+<details>
+<summary><b>Manual install (Claude Code / Kiro CLI)</b></summary>
 
 ```bash
-/plugin marketplace add vidanov/aws-architecture-diagram-skill
-/plugin install aws-architecture-diagram@vidanov-skills
-```
-
-Then use it:
-```
-/aws-architecture-diagram:aws-architecture-diagram
-```
-
-Or just ask naturally — the skill activates automatically when you mention AWS architecture diagrams.
-
-### Claude Code (Manual)
-
-```bash
+# Claude Code
 mkdir -p ~/.claude/skills/aws-architecture-diagram
 cp claude/SKILL.md ~/.claude/skills/aws-architecture-diagram/SKILL.md
 cp -r references ~/.claude/skills/aws-architecture-diagram/references
-```
 
-### Kiro CLI
-
-```bash
-# Global (all projects)
+# Kiro CLI (global)
 mkdir -p ~/.kiro/skills/aws-architecture-diagram
 cp kiro/SKILL.md ~/.kiro/skills/aws-architecture-diagram/SKILL.md
 cp -r references ~/.kiro/skills/aws-architecture-diagram/references
-
-# Per-project
-mkdir -p .kiro/skills/aws-architecture-diagram
-cp kiro/SKILL.md .kiro/skills/aws-architecture-diagram/SKILL.md
-cp -r references .kiro/skills/aws-architecture-diagram/references
 ```
+
+</details>
 
 ## Usage
 
-Just ask to create an AWS architecture diagram:
+Ask for a diagram:
 
 ```
 Create an AWS architecture diagram for a serverless API with Lambda, DynamoDB, and API Gateway
 ```
 
-Or with export:
+With export:
 
 ```
 Create an AWS architecture diagram as PNG for a real-time data pipeline with Kinesis, Lambda, and S3
 ```
 
-## Example Output
+## Example output
 
-### Event-Driven Order Processing
+### Event-driven order processing
 > "Create an event-driven order processing architecture with SQS, Lambda, DynamoDB, and EventBridge"
 
 ![Event-Driven Order Processing](docs/example-event-driven.png)
 [Download .drawio](examples/example-event-driven.drawio)
 
-### Real-Time IoT Analytics
+### Real-time IoT analytics
 > "Create a real-time IoT analytics pipeline with Kinesis, Lambda, S3 data lake, and DynamoDB"
 
 ![Real-Time IoT Analytics](docs/example-streaming.png)
 [Download .drawio](examples/example-streaming.drawio)
 
-### 3-Tier Web Application
+### 3-tier web application
 > "Create a 3-tier web application with CloudFront, ALB, ECS Fargate, Aurora, and ElastiCache"
 
 ![3-Tier Web Application](docs/example-3tier.png)
 [Download .drawio](examples/example-3tier.drawio)
 
-## Structure
+## Why icons break (and how this skill prevents it)
 
-```
-aws-architecture-diagram-skill/
-├── README.md
-├── LICENSE
-├── chatgpt/
-│   ├── PROMPT.md                       # Universal prompt (ChatGPT, Claude Projects, any AI)
-│   └── references/                     # Same icons in .txt format for upload
-│       ├── aws-icons-common.txt
-│       ├── aws-icons-compute.txt
-│       ├── aws-icons-database.txt
-│       ├── aws-icons-integration.txt
-│       ├── aws-icons-networking.txt
-│       ├── aws-icons-storage.txt
-│       ├── aws-icons-security.txt
-│       ├── aws-icons-analytics-ml.txt
-│       └── aws-icons-iot-migration-devtools.txt
-├── kiro/
-│   └── SKILL.md                        # Kiro CLI version
-├── claude/
-│   └── SKILL.md                        # Claude Code version
-└── references/
-    ├── aws-icons-compute.md            # Lambda, EC2, ECS, EKS, Fargate (25+ icons)
-    ├── aws-icons-database.md           # DynamoDB, RDS, Aurora, ElastiCache (40+ icons)
-    ├── aws-icons-integration.md        # API GW, SQS, SNS, EventBridge, Step Functions (35+ icons)
-    ├── aws-icons-networking.md         # CloudFront, Route 53, VPC, ELB (40+ icons)
-    ├── aws-icons-storage.md            # S3, EFS, EBS, Glacier, Backup (40+ icons)
-    ├── aws-icons-security.md           # IAM, Cognito, KMS, WAF, Shield (45+ icons)
-    ├── aws-icons-analytics-ml.md       # Kinesis, Athena, Bedrock, SageMaker (45+ icons)
-    └── aws-icons-common.md             # Groups, general resources, edge styles, base template
-```
-
-## Key Insight: Two Icon Patterns
-
-draw.io AWS icons have **two patterns** with opposite `strokeColor` rules:
+draw.io AWS icons have two patterns with opposite `strokeColor` rules:
 
 | Pattern | Style | strokeColor | Use for |
 |---------|-------|-------------|---------|
-| Service-level | `shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<name>` | `#ffffff` (REQUIRED) | Main service icons (colored square + white glyph) |
-| Resource-level | `shape=mxgraph.aws4.<name>` | `none` (REQUIRED) | Sub-resources (silhouette icons) |
+| Service-level | `shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.<name>` | `#ffffff` (required) | Main service icons (colored square + white glyph) |
+| Resource-level | `shape=mxgraph.aws4.<name>` | `none` (required) | Sub-resources (silhouette icons) |
 
-**Confusing these patterns is the #1 cause of broken icons in AI-generated diagrams.**
+Confusing these two patterns is the #1 cause of broken icons in AI-generated diagrams. The skill encodes the correct pattern for every icon.
 
-## Key Insight: Legacy Stencil Names
+draw.io stencil names also don't match current AWS service names. Renamed services keep old identifiers (OpenSearch is still `elasticsearch_service` in the stencil). The skill carries the correct mapping so the agent never guesses.
 
-draw.io stencil names don't always match current AWS service names. Renamed services keep their old stencil identifiers:
+## What the skill enforces
 
-| AWS Service | draw.io `resIcon` | Reason |
-|---|---|---|
-| Amazon OpenSearch Service | `elasticsearch_service` | Renamed from Elasticsearch (2021) |
+- Left-to-right flow (UI on left, data on right)
+- 78px icons, strokeWidth=2 edges, AWS color palette
+- Minimum 220px horizontal spacing, 250px vertical between lanes
+- Two-step approach: generate XML, export to PNG, visually verify, fix if needed
+- Only verified stencil names (no empty-box surprises)
 
-**Empty icon = wrong stencil name.** The skill includes a verified icon catalog to prevent this.
+## Supported services (270+ icons)
 
-## Two-Step Edit Approach
-
-The skill instructs the AI agent to:
-1. Generate the `.drawio` XML
-2. Export to PNG and visually review for broken icons or layout issues
-3. Fix and re-export
-
-This catches rendering problems that are invisible in raw XML.
-
-## Supported Services (110+ icons)
-
-| Category | Icons |
-|----------|-------|
+| Category | Examples |
+|----------|----------|
 | Compute | Lambda, EC2, ECS, EKS, Fargate |
 | App Integration | API Gateway, SNS, SQS, EventBridge, Step Functions |
 | Database | DynamoDB, RDS, Aurora, ElastiCache |
 | Storage | S3, EFS, EBS |
 | Networking | CloudFront, Route 53, VPC, ELB (ALB/NLB) |
 | Security | IAM, Cognito, KMS, WAF |
+| Analytics/ML | Kinesis, Athena, Bedrock, SageMaker |
 
-## Known Broken Icons
-
-These `resIcon` values do NOT render in draw.io — avoid them:
+## Known broken stencils (avoid these)
 
 - `mxgraph.aws4.dynamodb_table` → use `mxgraph.aws4.dynamodb` instead
 - `mxgraph.aws4.dynamodb_stream` → use `mxgraph.aws4.dynamodb` with label
 - `mxgraph.aws4.general_saml_token` → use `mxgraph.aws4.traditional_server`
 
----
+## Comparison
 
-## Comparison with Alternatives
+| Solution | Output | Editable | Zero deps | Verified icons |
+|----------|--------|----------|-----------|----------------|
+| **This skill** | `.drawio` | yes | yes (markdown file) | yes (270+) |
+| [jgraph/drawio-mcp](https://github.com/jgraph/drawio-mcp) | `.drawio` | yes | no (MCP server) | no |
+| [awslabs/aws-diagram-mcp-server](https://pypi.org/project/awslabs.aws-diagram-mcp-server/) | PNG | no | no (Python+GraphViz) | N/A |
+| [awslabs/diagram-as-code](https://github.com/awslabs/diagram-as-code) | PNG/SVG | no | no (Go binary) | N/A |
+| [clouda.ai](https://clouda.ai/) | PNG | no | N/A (SaaS) | N/A |
 
-| Solution | Type | Output | Editable | Zero-deps | Verified Icons |
-|----------|------|--------|----------|-----------|----------------|
-| **[aws-architecture-diagram-skill](https://github.com/vidanov/aws-architecture-diagram-skill)** | Agent Skill | `.drawio` | ✅ | ✅ | ✅ |
-| [jgraph/drawio-mcp](https://github.com/jgraph/drawio-mcp) | MCP Server + Skill | `.drawio` | ✅ | ❌ (MCP) | ❌ |
-| [awslabs/aws-diagram-mcp-server](https://pypi.org/project/awslabs.aws-diagram-mcp-server/) | MCP Server (Python) | PNG | ❌ | ❌ (Python+GraphViz) | N/A |
-| [awslabs/diagram-as-code](https://github.com/awslabs/diagram-as-code) | CLI (Go) | PNG/SVG | ❌ | ❌ (Go binary) | N/A |
-| [carlosmgv02/diagram-ai-generator](https://github.com/carlosmgv02/diagram-ai-generator) | MCP Server | Multi-cloud | ❌ | ❌ (MCP) | ❌ |
-| [clouda.ai](https://clouda.ai/) | SaaS | PNG | ❌ | N/A | N/A |
+No runtime dependencies. A markdown file, not a server. Output is native `.drawio` XML you can open, edit, and version-control.
 
-**Why this approach wins:**
-- No runtime dependencies. It's a markdown file, not a server.
-- Output is native `.drawio` XML you can open, edit, and version-control.
-- Verified icon catalog documents which `mxgraph.aws4.*` names actually render vs. silently break.
-- Opinionated layout: left-to-right flow with consistent spacing, not random placement.
-- Works with any AI assistant: ChatGPT, Claude, Kiro CLI, or internal corporate agents.
+## Structure
+
+```
+aws-architecture-diagram-skill/
+├── chatgpt/
+│   ├── PROMPT.md                       # Universal prompt (any AI assistant)
+│   └── references/                     # Icon catalog in .txt format
+├── kiro/SKILL.md                       # Kiro CLI version
+├── claude/SKILL.md                     # Claude Code version
+├── references/                         # Icon catalog in .md format (9 files)
+├── examples/                           # Example .drawio outputs
+├── templates/                          # Base templates
+└── docs/                               # Hero image, example PNGs
+```
 
 ## Contributing
 
-Contributions are welcome! Here's how you can help:
+PRs welcome:
 
-1. **Fork** this repository
-2. **Create a branch** for your feature or fix (`git checkout -b my-feature`)
-3. **Make your changes** — add icons, fix stencil names, improve layout rules, etc.
-4. **Submit a Pull Request** with a clear description of what you changed and why
-
-You can also **open an Issue** if you:
-- Found a broken icon or wrong stencil name
-- Want to request support for a new AWS service
-- Have suggestions for layout or styling improvements
-- Encountered a bug with a specific AI agent
+- Found a broken stencil name? Fix it.
+- Want to add a new AWS service icon? Add it to the correct references file.
+- Layout improvement ideas? Open an issue or PR.
+- Bug with a specific AI agent? Report it.
 
 ## License
 
