@@ -1,0 +1,83 @@
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Terminal demo: generating an AWS architecture diagram from a prompt">
+  <defs>
+    <clipPath id="typeClip">
+      <rect class="typew" x="66" y="72" width="468" height="24"/>
+    </clipPath>
+  </defs>
+  <style>
+    text { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; font-size: 15px; }
+    .dim { fill: #8b949e; } .txt { fill: #e6edf3; } .grn { fill: #3fb950; }
+    .lnk { fill: #7ee787; } .org { fill: #ff9900; } .cyn { fill: #79c0ff; }
+
+    .typew { animation: type 18s steps(52, end) infinite; }
+    @keyframes type { 0%, 1% { width: 0; } 14%, 100% { width: 468px; } }
+
+    .fade { animation: fadeAll 18s linear infinite; }
+    @keyframes fadeAll { 0%, 94% { opacity: 1; } 98%, 100% { opacity: 0; } }
+
+    .a16 { animation: k16 18s linear infinite; } @keyframes k16 { 0%,16% {opacity:0} 18%,100% {opacity:1} }
+    .a20 { animation: k20 18s linear infinite; } @keyframes k20 { 0%,20% {opacity:0} 22%,100% {opacity:1} }
+    .a26 { animation: k26 18s linear infinite; } @keyframes k26 { 0%,26% {opacity:0} 28%,100% {opacity:1} }
+    .a32 { animation: k32 18s linear infinite; } @keyframes k32 { 0%,32% {opacity:0} 34%,100% {opacity:1} }
+    .a38 { animation: k38 18s linear infinite; } @keyframes k38 { 0%,38% {opacity:0} 40%,100% {opacity:1} }
+    .a44 { animation: k44 18s linear infinite; } @keyframes k44 { 0%,44% {opacity:0} 46%,100% {opacity:1} }
+    .a50 { animation: k50 18s linear infinite; } @keyframes k50 { 0%,50% {opacity:0} 52%,100% {opacity:1} }
+    .a56 { animation: k56 18s linear infinite; } @keyframes k56 { 0%,56% {opacity:0} 58%,100% {opacity:1} }
+    .box { animation: kbox 18s linear infinite; }
+    @keyframes kbox { 0%,60% {opacity:0; transform: translateY(8px);} 64%,100% {opacity:1; transform: translateY(0);} }
+    .a72 { animation: k72 18s linear infinite; } @keyframes k72 { 0%,72% {opacity:0} 74%,100% {opacity:1} }
+
+    @media (prefers-reduced-motion: reduce) {
+      .typew, .fade, .a16,.a20,.a26,.a32,.a38,.a44,.a50,.a56,.box,.a72 { animation: none; }
+    }
+  </style>
+
+  <!-- window chrome -->
+  <rect x="10" y="8" width="880" height="584" rx="12" fill="#0d1117" stroke="#30363d"/>
+  <path d="M10 44 h880 v-24 a12 12 0 0 0 -12 -12 h-856 a12 12 0 0 0 -12 12 z" fill="#161b22"/>
+  <line x1="10" y1="44" x2="890" y2="44" stroke="#30363d"/>
+  <circle cx="34" cy="26" r="6" fill="#ff5f56"/>
+  <circle cx="56" cy="26" r="6" fill="#ffbd2e"/>
+  <circle cx="78" cy="26" r="6" fill="#27c93f"/>
+  <text x="450" y="31" text-anchor="middle" class="dim" font-size="13">aws-architecture-diagram-skill</text>
+
+  <g class="fade">
+    <!-- prompt -->
+    <text x="48" y="90" class="grn">$</text>
+    <g clip-path="url(#typeClip)">
+      <text x="66" y="90" class="txt">Create a serverless API with Lambda, DynamoDB, API GW</text>
+    </g>
+
+    <!-- skill activation -->
+    <g class="a16">
+      <text x="48" y="126" class="org" font-weight="bold">AWS Architecture Diagram Skill</text>
+      <line x1="328" y1="121" x2="852" y2="121" stroke="#2a3a5e"/>
+    </g>
+
+    <!-- steps -->
+    <text x="48" y="166" class="a20 txt">[1/5] Resolving icons from verified catalog .......</text>
+    <text x="540" y="166" class="a26 grn">✓ 6 icons</text>
+    <text x="48" y="193" class="a26 txt">[2/5] Applying left-to-right layout ...............</text>
+    <text x="540" y="193" class="a32 grn">✓</text>
+    <text x="48" y="220" class="a32 txt">[3/5] Setting strokeColor per icon pattern ........</text>
+    <text x="540" y="220" class="a38 grn">✓</text>
+    <text x="48" y="247" class="a38 txt">[4/5] Generating .drawio XML ......................</text>
+    <text x="540" y="247" class="a44 grn">✓ 127 lines</text>
+    <text x="48" y="274" class="a44 txt">[5/5] Exporting PNG for visual review .............</text>
+    <text x="540" y="274" class="a50 grn">✓</text>
+
+    <!-- icon verification note -->
+    <text x="48" y="310" class="a56 dim">All icons verified: CloudFront, API GW, Lambda, DynamoDB, S3, CloudWatch</text>
+
+    <!-- success box -->
+    <g class="box">
+      <rect x="48" y="330" width="804" height="118" rx="10" fill="#0f1c14" stroke="#2ea043" stroke-width="1.5"/>
+      <text x="76" y="368" class="grn" font-weight="bold">DIAGRAM READY</text>
+      <circle cx="83" cy="403" r="5" fill="#3fb950"/>
+      <text x="100" y="409" class="lnk" font-size="17">serverless-api.drawio (6 services, 7 connections)</text>
+      <text x="76" y="436" class="dim">Open in draw.io Desktop or import to diagrams.net</text>
+    </g>
+
+    <text x="48" y="494" class="a72 dim">Tip: ask "export as PNG" to render and visually verify icons</text>
+  </g>
+</svg>

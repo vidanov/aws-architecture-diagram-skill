@@ -20,6 +20,10 @@
 
 One prompt. One `.drawio` file. Every icon renders correctly because the skill carries a verified catalog of 270+ stencil names, not guesses.
 
+<div align="center">
+  <img src="docs/terminal-demo.svg" alt="Terminal demo: generating an AWS architecture diagram from a prompt" width="800">
+</div>
+
 Works with any AI assistant: ChatGPT, Claude Projects, Kiro CLI, Claude Code, Cursor, or internal agents.
 
 ## The problem this solves
