@@ -1,8 +1,22 @@
 # AWS Architecture Diagram Skill
 
+<div align="center">
+
 [![Website](https://img.shields.io/badge/Website-vidanov.github.io-8C4FFF)](https://vidanov.github.io/aws-architecture-diagram-skill/)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Install: one command](https://img.shields.io/badge/install-npx%20skills%20add-brightgreen.svg)
+![Icons: 270+](https://img.shields.io/badge/icons-270%2B%20verified-orange.svg)
+![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
+</div>
 
 ![Prompt → AI Agent + Skill → .drawio diagram](docs/hero.png)
+
+<div align="center">
+
+[Quick start](#quick-start) · [Examples](#example-output) · [Why icons break](#why-icons-break-and-how-this-skill-prevents-it) · [Comparison](#comparison) · [Contributing](#contributing)
+
+</div>
 
 One prompt. One `.drawio` file. Every icon renders correctly because the skill carries a verified catalog of 270+ stencil names, not guesses.
 
