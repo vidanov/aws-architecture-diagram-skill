@@ -246,3 +246,12 @@ You can also **open an Issue** if you:
 ## License
 
 MIT
+
+---
+
+If this saved you a diagramming session, a star ⭐ helps the next person find it.
+
+## Also by the author
+
+- [writing-craft-skill](https://github.com/vidanov/writing-craft-skill): teach AI agents to write well using classic copywriting craft plus AI anti-pattern detection
+- [shape](https://github.com/vidanov/shape): runtime governance for AI agents (phases, transactions, budget gates, proof traces)
