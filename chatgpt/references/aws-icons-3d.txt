@@ -1,0 +1,73 @@
+# AWS Icons: 3D / Isometric (legacy aws3d library)
+
+Use when the user asks for a 3D, isometric, or "AWS 3D" style diagram.
+This is a real, separate stencil library built into draw.io: mxgraph.aws3d.*
+
+## Critical facts
+
+- Legacy pre-2019 icon set, frozen around 2015-2016. NOT maintained.
+- Coverage is much smaller than aws4. Most modern services have NO icon here.
+- Style prefix (prepend to every shape):
+  verticalLabelPosition=bottom;html=1;verticalAlign=top;strokeWidth=1;align=center;outlineConnect=0;dashed=0;shape=mxgraph.aws3d.<name>;
+- Shape names are camelCase: dynamoDb, internetGateway, NOT dynamodb, internet_gateway.
+- No resIcon/resourceIcon wrapper — all standalone shapes via shape=mxgraph.aws3d.<name>
+- Use edgeStyle=isometricEdgeStyle (with endArrow=block override) for connectors.
+
+## Verified shapes
+
+| Shape name | Display Name | Extra style | Size (w x h) |
+|---|---|---|---|
+| client | Client | strokeColor=none;fillColor=#777777;aspect=fixed; | 60 x 104 |
+| end_user | User (person) | strokeColor=none;fillColor=#777777;aspect=fixed; | 49 x 100 |
+| mobile_worker | Mobile Worker | strokeColor=none;fillColor=#777777;aspect=fixed; | 36 x 90 |
+| lambda | Lambda | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;strokeColor3=#ffffff;aspect=fixed; | 92 x 109 |
+| dynamoDb | DynamoDB | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 182 x 210 |
+| rds | RDS | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;strokeColor3=#ffffff;aspect=fixed; | 123 x 133 |
+| rdsMaster | RDS Master | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 123 x 133 |
+| rdsSlave | RDS Slave | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 123 x 133 |
+| s3 | S3 | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 232 x 239 |
+| s3Bucket | S3 Bucket | fillColor=#4286c5;strokeColor=#57A2D8;strokeColor2=#292929;aspect=fixed; | 62 x 64 |
+| sqs | SQS | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 184 x 213 |
+| application_server | EC2 Instance | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 123 x 124 |
+| elasticLoadBalancing | Elastic Load Balancing | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 92 x 88 |
+| cloudfront | CloudFront | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 104 x 170 |
+| route53 | Route 53 | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 117 x 134 |
+| internetGateway | Internet Gateway | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 117 x 103 |
+| vpcGateway | VPC Gateway | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 117 x 103 |
+| email_service | Email Service (SES) | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 151 x 192 |
+| redshift | Redshift | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 150 x 190 |
+| glacier | Glacier | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 181 x 192 |
+| elasticBeanstalk | Elastic Beanstalk | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 182 x 140 |
+| elasticMapReduce | Elastic MapReduce | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 123 x 133 |
+| searchEngine | CloudSearch | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 180 x 192 |
+| securityTokenService | STS | fillColor=#ECECEC;strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 180 x 192 |
+| dataCenter | Data Center | strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 123 x 142 |
+| dataServer | Data Server | strokeColor=#5E5E5E;strokeColor2=#292929;aspect=fixed; | 123 x 106 |
+
+## Edge style
+
+Use the native isometric edge style:
+  edgeStyle=isometricEdgeStyle;endArrow=block;startArrow=none;html=1;
+  edgeStyle=isometricEdgeStyle;endArrow=block;startArrow=none;html=1;elbow=vertical;
+
+The elbow=vertical variant changes which axis bends first.
+
+## Layout
+
+- Arrange along an ascending isometric staircase (each node dx=+400, dy=-200 from previous)
+- Icons are already 3D — do NOT add platform/pedestal shapes underneath
+- Anchor icons by bottom-center on a shared ground line per step
+- Keep the same title/legend/companion conventions as standard diagrams
+
+## Gaps — common services with NO icon in aws3d
+
+| Requested | Suggested stand-in | Notes |
+|---|---|---|
+| API Gateway | internetGateway | Flag it in legend |
+| ECS/EKS/Fargate | application_server | Generic, not container-specific |
+| SNS/EventBridge/Step Functions | none | Fall back to aws4 icon |
+| Aurora/Neptune | rds | Generic RDS box |
+| CloudWatch/IAM/KMS/Cognito | none | Fall back to aws4 icon |
+| Generic server | Allied Telesis Server_Desktop.svg | Better visual fit |
+
+Source: draw.io Sidebar-AWS3D.js
