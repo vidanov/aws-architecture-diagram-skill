@@ -207,8 +207,8 @@ PRs welcome:
 
 ## Contributors
 
-- [@svetozarm](https://github.com/svetozarm) (Svetozar Miucin) — 3D isometric diagram support
-- [@SyedSamrozeAli](https://github.com/SyedSamrozeAli) (Syed Samroze Ali) — 3D isometric diagram support
+- [@svetozarm](https://github.com/svetozarm) (Svetozar Miucin) · Kiro CLI install support
+- [@SyedSamrozeAli](https://github.com/SyedSamrozeAli) (Syed Samroze Ali) · 3D isometric diagram support
 
 ## License
 
