@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- 3D/isometric diagram support via draw.io's legacy `mxgraph.aws3d.*` icon library (`references/aws-icons-3d.md`), including the native `isometricEdgeStyle` connector guidance and a documented coverage-gap table (this legacy set predates services like API Gateway, ECS/EKS, Step Functions, etc.)
+- Bonus generic isometric hardware icons via the bundled Allied Telesis image library (`references/aws-icons-allied-telesis.md`) — clients, servers, server racks, and network hardware — for filling `aws3d` coverage gaps
+- General "Visual Quality" layout rules (straight arrows, no overlapping/crossing edges, consistent node alignment and spacing, single-bend-max routing) — applies to every diagram the skill produces, not just 3D ones
+- New examples: `examples/example-3d-serverless-api.drawio` and `examples/example-3d-ecommerce-website-architecture.drawio` demonstrating both new icon libraries together, with rendered screenshots in `docs/`
+
+### Notes
+- `tests/validate_drawio.py` currently warns on `isometricEdgeStyle` edges for missing `exitX`/`entryX` (Issue #2 check). This is a false positive for that edge style, which computes its own connection points — worth a follow-up to scope that check to `orthogonalEdgeStyle` edges only.
+
 ## [1.1.0] - 2026-05-22
 
 ### Added
