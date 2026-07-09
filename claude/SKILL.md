@@ -40,6 +40,14 @@ Generate AWS architecture diagrams as native `.drawio` files using official AWS 
 - Font size: **12px** for labels
 - **NO colored backgrounds** on group boxes — always `fillColor=none`
 
+### 3D / Isometric Diagrams — use a different icon library
+If the user asks for a **3D**, **isometric**, or "AWS 3D" diagram, do NOT fake it by placing flat `aws4` icons on hand-built platform/pedestal shapes. draw.io has a real, separate built-in library for this: `mxgraph.aws3d.*`.
+- Load `references/aws-icons-3d.md` before picking any icon — it has the verified shape table, style prefix, sizes, and the native `isometricEdgeStyle` edge templates.
+- This library is a legacy pre-2019 icon set with **much smaller coverage** than `aws4` (no API Gateway, ECS/EKS/Fargate, Step Functions, EventBridge, SNS, Aurora, CloudWatch, IAM, etc.). Check the gap table in that reference file before assuming an icon exists, and flag substitutions to the user rather than guessing a stencil name.
+- For generic hardware (clients, on-prem servers, racks, switches) with no AWS-specific icon, see `references/aws-icons-allied-telesis.md` — a separate bundled isometric image library that fills that gap.
+- These icons are already 3D on their own — arrange them in an ascending isometric staircase (diagonal offsets between nodes), don't add fake platforms underneath.
+- Use `edgeStyle=isometricEdgeStyle` (with `endArrow=block` override for reliable arrowheads) instead of `orthogonalEdgeStyle` for connectors.
+
 ## Edge Style — CRITICAL FOR CLEAN DIAGRAMS
 
 **Base edge style:**
@@ -68,6 +76,20 @@ edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;s
 - NEVER create floating/unattached edges — all edges must be bound to shapes at both ends
 - Always include `exitX/exitY` and `entryX/entryY` to define exact connection points on the shape perimeter
 - **Cross-container edges:** When source and target are in different containers, set the edge's `parent="1"`
+
+## Visual Quality: straight arrows, no overlaps, professional layout
+
+A diagram with correct icons but a messy layout still reads as unprofessional. Check every diagram against these rules before finishing — they're deliberately concrete/checkable, not vague "make it look nice" advice:
+
+- **Align nodes to a consistent axis so edges are single, straight segments.** Keep the horizontal or vertical delta between adjacent nodes in a flow constant (same lane y-coordinate, same column spacing) so connecting edges render as one clean line instead of a dogleg.
+- **Align branch/secondary nodes on the exact same centerline as their parent.** If a node branches off vertically (e.g. an auxiliary service below the main flow), its horizontal center must match its parent's horizontal center exactly — compute `child.x = parent.center_x - child.width/2`, don't eyeball it. A few pixels of misalignment turns a "straight down" edge into a visibly crooked diagonal.
+- **One bend maximum per edge, ideally zero.** If a computed edge path would need more than one bend to avoid an obstacle, the layout is wrong — move the node, don't add more bends to route around the problem.
+- **No edge may cross through an unrelated icon's bounding box.** Before finalizing coordinates, check each edge's path against every icon's `(x, y, width, height)` rectangle it isn't connected to. If it would cross one, move the node or add an explicit exit/entry point to route around it.
+- **No two edges may run on top of each other or visually merge.** If two edges would travel the same corridor (e.g. two parallel flows between the same pair of lanes), offset them — different exit/entry points, or an explicit waypoint — so there's a visible gap between them.
+- **Minimize edge crossings overall.** Order nodes in the direction the data actually flows so edges rarely need to cross each other. If a crossing is unavoidable (e.g. a feedback/response path), route it with a visible offset rather than letting it overlap another edge.
+- **Keep spacing consistent, not just "enough."** Use the same minimum step size between every pair of adjacent nodes in a flow — a diagram where some gaps are 400px and others are 250px reads as sloppy even if nothing technically overlaps.
+- **Balance the composition on the canvas.** Don't leave one half of the page dense and the other empty; size the canvas to the actual content plus a consistent margin.
+- **Self-check before finishing:** after placing every coordinate, mentally trace each edge from source to target and verify (1) it doesn't cross any icon, (2) it doesn't overlap another edge, (3) it has at most one bend, (4) its endpoints are flush with the icons it connects. Fix the layout, not just the intent, if any check fails.
 
 ## PNG Export Background
 First element after root cells (lowest z-order):
@@ -197,7 +219,7 @@ draw.io stencil names do NOT always match current AWS service names. Services th
 | Amazon MSK | `managed_streaming_for_kafka` | NOT `msk` (renders as blank square) |
 | IAM Identity Center | `single_sign_on` | NOT `iam_identity_center` (renders as blank square) |
 
-**Rule:** Always verify icon names from the reference files. If a service icon renders as an empty box, the stencil name is wrong. Check the draw.io source at `src/main/webapp/js/diagramly/sidebar/Sidebar-AWS4.js` for the canonical name.
+**Rule:** Always verify icon names from the reference files. If a service icon renders as an empty box, the stencil name is wrong. Check the draw.io source at `src/main/webapp/js/diagramly/sidebar/Sidebar-AWS4.js` for the canonical name (or `Sidebar-AWS3D.js` for the legacy 3D/isometric library, or `Sidebar-AlliedTelesis.js` for the generic hardware image library — note the 3D library's shape names are camelCase, e.g. `dynamoDb` not `dynamodb`).
 
 **Fallback for unmapped services:** If a service is NOT found in any reference file, use this generic AWS cloud icon with the service name as label:
 ```

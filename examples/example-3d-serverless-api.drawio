@@ -1,0 +1,89 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="serverless-iso" name="Serverless API - Isometric">
+    <mxGraphModel dx="2800" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="2400" height="1400" as="geometry" />
+        </mxCell>
+
+        <mxCell id="title" value="&lt;b&gt;Serverless API - Isometric (AWS 3D) Architecture&lt;/b&gt;&lt;br&gt;API Gateway &#8594; Lambda &#8594; DynamoDB, with an on-prem backup path" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=14;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="560" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-title" value="Flow" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-text" value="Client sends an HTTPS request to API Gateway, which invokes the Lambda function; Lambda reads/writes items in DynamoDB and returns the response back through the same path. Lambda also asynchronously mirrors writes to an on-prem backup server.&lt;br&gt;&lt;br&gt;&lt;i&gt;Icon notes: uses the legacy aws3d isometric library (Client, Lambda, DynamoDB). It has no API Gateway glyph, so the Internet Gateway icon stands in for it. The backup server uses the bundled Allied Telesis isometric image library (aws-icons-allied-telesis.md), which fills aws3d's gap for generic on-prem/server-rack hardware.&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#5A6C86;" vertex="1" parent="1">
+          <mxGeometry x="60" y="122" width="460" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="icon-user" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;strokeWidth=1;align=center;outlineConnect=0;dashed=0;shape=mxgraph.aws3d.client;aspect=fixed;strokeColor=none;fillColor=#777777;" vertex="1" parent="1">
+          <mxGeometry x="190" y="796" width="60" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="label-user" value="&lt;b&gt;Client&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="120" y="910" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sublabel-user" value="Web / Mobile App" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#5A6C86;" vertex="1" parent="1">
+          <mxGeometry x="120" y="930" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="icon-apigw" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;strokeWidth=1;align=center;outlineConnect=0;dashed=0;shape=mxgraph.aws3d.internetGateway;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;strokeColor2=#292929;" vertex="1" parent="1">
+          <mxGeometry x="562" y="597" width="117" height="103" as="geometry" />
+        </mxCell>
+        <mxCell id="label-apigw" value="&lt;b&gt;API Gateway&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="520" y="710" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sublabel-apigw" value="REST API Endpoint (Internet Gateway icon used as stand-in)" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#5A6C86;" vertex="1" parent="1">
+          <mxGeometry x="470" y="730" width="300" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="icon-lambda" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;strokeWidth=1;align=center;outlineConnect=0;dashed=0;shape=mxgraph.aws3d.lambda;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;strokeColor2=#292929;strokeColor3=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="974" y="391" width="92" height="109" as="geometry" />
+        </mxCell>
+        <mxCell id="label-lambda" value="&lt;b&gt;Lambda&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="920" y="510" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sublabel-lambda" value="Business Logic Function" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#5A6C86;" vertex="1" parent="1">
+          <mxGeometry x="920" y="530" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="icon-ddb" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;strokeWidth=1;align=center;outlineConnect=0;dashed=0;shape=mxgraph.aws3d.dynamoDb;fillColor=#ECECEC;strokeColor=#5E5E5E;aspect=fixed;strokeColor2=#292929;" vertex="1" parent="1">
+          <mxGeometry x="1329" y="90" width="182" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="label-ddb" value="&lt;b&gt;DynamoDB&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="310" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sublabel-ddb" value="NoSQL Table" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#5A6C86;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="330" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="icon-backup" value="" style="image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/storage/Datacenter_Server_Rack.svg;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="976" y="820" width="88" height="179" as="geometry" />
+        </mxCell>
+        <mxCell id="label-backup" value="&lt;b&gt;Backup Server&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="920" y="1005" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sublabel-backup" value="On-prem, Allied Telesis icon" style="text;html=1;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#5A6C86;" vertex="1" parent="1">
+          <mxGeometry x="920" y="1025" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge1" value="HTTPS" style="edgeStyle=isometricEdgeStyle;elbow=vertical;endArrow=block;startArrow=none;html=1;strokeWidth=3;strokeColor=#232F3E;fontSize=12;fontColor=#232F3E;labelBackgroundColor=#F5F5F5;rounded=0;" edge="1" parent="1" source="icon-user" target="icon-apigw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" value="Invoke" style="edgeStyle=isometricEdgeStyle;elbow=vertical;endArrow=block;startArrow=none;html=1;strokeWidth=3;strokeColor=#232F3E;fontSize=12;fontColor=#232F3E;labelBackgroundColor=#F5F5F5;rounded=0;" edge="1" parent="1" source="icon-apigw" target="icon-lambda">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" value="Query / Write" style="edgeStyle=isometricEdgeStyle;elbow=vertical;endArrow=block;startArrow=none;html=1;strokeWidth=3;strokeColor=#232F3E;fontSize=12;fontColor=#232F3E;labelBackgroundColor=#F5F5F5;rounded=0;" edge="1" parent="1" source="icon-lambda" target="icon-ddb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" value="Backup (async)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;labelBackgroundColor=#F5F5F5;fontSize=11;align=right;" edge="1" parent="1" source="icon-lambda" target="icon-backup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
