@@ -51,6 +51,16 @@ fillColor by AWS service category:
 | Management | #E7157B | CloudWatch, CloudTrail |
 | AI/ML | #01A88D | Bedrock, SageMaker |
 
+## 3D / Isometric Diagrams — use a different icon library
+
+If the user asks for a **3D**, **isometric**, or "AWS 3D" diagram, do NOT fake it by placing flat `aws4` icons on hand-built platform/pedestal shapes. draw.io has a real, separate built-in library for this: `mxgraph.aws3d.*`.
+- Use the `aws-icons-3d.txt` knowledge base file — it has the verified shape table, style prefix, sizes, and the native `isometricEdgeStyle` edge templates.
+- This library is a legacy pre-2019 icon set with **much smaller coverage** than `aws4` (no API Gateway, ECS/EKS/Fargate, Step Functions, EventBridge, SNS, Aurora, CloudWatch, IAM, etc.). Check the gap table in the reference file before assuming an icon exists, and flag substitutions to the user rather than guessing a stencil name.
+- For generic hardware (clients, on-prem servers, racks, switches) with no AWS-specific icon, see `aws-icons-allied-telesis.txt` — a separate bundled isometric image library that fills that gap.
+- These icons are already 3D on their own — arrange them in an ascending isometric staircase (diagonal offsets between nodes), don't add fake platforms underneath.
+- Use `edgeStyle=isometricEdgeStyle` (with `endArrow=block` override for reliable arrowheads) instead of `orthogonalEdgeStyle` for connectors.
+- Shape names are **camelCase**, e.g. `dynamoDb` not `dynamodb`, `internetGateway` not `internet_gateway`.
+
 ## Edge Style — CRITICAL FOR CLEAN DIAGRAMS
 
 Base edge style (all edges):

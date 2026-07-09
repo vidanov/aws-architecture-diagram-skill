@@ -118,6 +118,18 @@ Create an AWS architecture diagram as PNG for a real-time data pipeline with Kin
 ![3-Tier Web Application](docs/example-3tier.png)
 [Download .drawio](examples/example-3tier.drawio)
 
+### 3D serverless API (isometric)
+> "Create a 3D AWS architecture diagram for a serverless API with Lambda, DynamoDB, and S3"
+
+![3D Serverless API](docs/example-3d-serverless-api.drawio.png)
+[Download .drawio](examples/example-3d-serverless-api.drawio)
+
+### 3D e-commerce website architecture (isometric)
+> "Create a 3D isometric AWS architecture for an e-commerce website"
+
+![3D E-Commerce Architecture](docs/example-3d-ecommerce-website-architecture.drawio.png)
+[Download .drawio](examples/example-3d-ecommerce-website-architecture.drawio)
+
 ## Why icons break (and how this skill prevents it)
 
 draw.io AWS icons have two patterns with opposite `strokeColor` rules:
@@ -192,6 +204,11 @@ PRs welcome:
 - Want to add a new AWS service icon? Add it to the correct references file.
 - Layout improvement ideas? Open an issue or PR.
 - Bug with a specific AI agent? Report it.
+
+## Contributors
+
+- [@svetozarm](https://github.com/svetozarm) (Svetozar Miucin) — 3D isometric diagram support
+- [@SyedSamrozeAli](https://github.com/SyedSamrozeAli) (Syed Samroze Ali) — 3D isometric diagram support
 
 ## License
 
