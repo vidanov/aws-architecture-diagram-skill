@@ -1,0 +1,60 @@
+# Icons: Allied Telesis isometric computer/server/network (bonus library for 3D diagrams)
+
+Companion to aws-icons-3d.txt. Use when a 3D/isometric diagram needs a generic client device,
+on-prem server, server rack, or network hardware icon with no AWS-specific equivalent in aws3d.
+
+## Critical facts
+
+- These are SVG images bundled inside draw.io, referenced by relative path. Style pattern:
+  image;points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;image=img/lib/allied_telesis/<category>/<File>.svg;
+- Only renders correctly inside draw.io (web app, desktop, VS Code extension).
+- Only use for generic hardware with no AWS-specific icon.
+
+## Verified shapes
+
+### computer_and_terminals/
+| File | Display Name | Size (w x h) |
+|---|---|---|
+| Personal_Computer.svg | Personal Computer | 46 x 62 |
+| Personal_Computer_Wireless.svg | Personal Computer (Wireless) | 63 x 64 |
+| Laptop.svg | Laptop | 42 x 43 |
+| Server_Desktop.svg | Server (Desktop) | 43 x 54 |
+| Smartphone.svg | Smartphone | 20 x 43 |
+| Tablet.svg | Tablet | 27 x 57 |
+| VOIP_IP_phone.svg | VOIP IP Phone | 30 x 46 |
+
+### storage/
+| File | Display Name | Size (w x h) |
+|---|---|---|
+| Datacenter_Server_Rack.svg | Datacenter Server Rack | 88 x 179 |
+| Datacenter_Server_Rack_ToR.svg | Server Rack (Top of Rack) | 88 x 179 |
+| Datacenter_Server_Rack_EoR.svg | Server Rack (End of Row) | 86 x 173 |
+| Datacenter_Server_Half_Rack_ToR.svg | Half Rack (ToR) | 88 x 115 |
+| Datacenter_Server_Rack_Storage_Unit_Small.svg | Small Storage Unit | 77 x 67 |
+| Datacenter_Server_Storage_Unit_Large.svg | Large Storage Unit | 77 x 79 |
+
+### switch/
+| File | Display Name | Size (w x h) |
+|---|---|---|
+| Switch_24_port_L2.svg | 24-port L2 switch | 74 x 51 |
+| Switch_24_port_L3.svg | 24-port L3 switch | 74 x 51 |
+| Switch_48_port_L2.svg | 48-port L2 switch | 78 x 53 |
+| Switch_48_port_L3.svg | 48-port L3 switch | 78 x 53 |
+
+### wireless/
+| File | Display Name | Size (w x h) |
+|---|---|---|
+| Access_Point_Indoor.svg | Indoor Access Point | 37 x 55 |
+| Access_Point_Outdoor.svg | Outdoor Access Point | 26 x 100 |
+
+### security/
+| File | Display Name | Size (w x h) |
+|---|---|---|
+| Router_UTM.svg | Router (UTM) | 56 x 40 |
+| Router_VPN.svg | Router (VPN) | 56 x 40 |
+
+## When to use
+Reach for Allied Telesis icons for: generic client devices, on-prem servers, server racks,
+and network hardware (switches, APs, routers). Keep using aws3d for actual AWS services.
+
+Source: draw.io Sidebar-AlliedTelesis.js
