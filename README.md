@@ -219,7 +219,6 @@ MIT
 If this saved you a diagramming session, a star ⭐ helps the next person find it.
 
 ## Star History
-## Star History
 
 <a href="https://www.star-history.com/?repos=vidanov%2Faws-architecture-diagram-skill&type=date&legend=bottom-right">
  <picture>
