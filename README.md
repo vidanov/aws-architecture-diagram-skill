@@ -218,6 +218,16 @@ MIT
 
 If this saved you a diagramming session, a star ⭐ helps the next person find it.
 
+## Star History
+
+<a href="https://www.star-history.com/?repos=vidanov%2Faws-architecture-diagram-skill&type=date&legend=bottom-right">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=vidanov/aws-architecture-diagram-skill&type=date&theme=dark&legend=bottom-right&sealed_token=UzPKRTuGL2sTepv3WkhFQyqBP_nsW69rhq79yB5nHQHDVST2Sqloc2L7KIYEuASdKaoeXfw4GOnHE1VckwA5NpilgI_owbNbLnZtf-D1fBNx-DwtxLJD7z9PUmBUDQSO-05Vm42mYhTmMhFfPD2kmPv9yzqZhk0TGrHF1dktIrsosVDGvd-uGl3SKecV" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=vidanov/aws-architecture-diagram-skill&type=date&legend=bottom-right&sealed_token=UzPKRTuGL2sTepv3WkhFQyqBP_nsW69rhq79yB5nHQHDVST2Sqloc2L7KIYEuASdKaoeXfw4GOnHE1VckwA5NpilgI_owbNbLnZtf-D1fBNx-DwtxLJD7z9PUmBUDQSO-05Vm42mYhTmMhFfPD2kmPv9yzqZhk0TGrHF1dktIrsosVDGvd-uGl3SKecV" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=vidanov/aws-architecture-diagram-skill&type=date&legend=bottom-right&sealed_token=UzPKRTuGL2sTepv3WkhFQyqBP_nsW69rhq79yB5nHQHDVST2Sqloc2L7KIYEuASdKaoeXfw4GOnHE1VckwA5NpilgI_owbNbLnZtf-D1fBNx-DwtxLJD7z9PUmBUDQSO-05Vm42mYhTmMhFfPD2kmPv9yzqZhk0TGrHF1dktIrsosVDGvd-uGl3SKecV" />
+ </picture>
+</a>
+
 ## Also by the author
 
 - [writing-craft-skill](https://github.com/vidanov/writing-craft-skill): teach AI agents to write well using classic copywriting craft plus AI anti-pattern detection
