@@ -24,6 +24,14 @@ One prompt. One `.drawio` file. Every icon renders correctly because the skill c
   <img src="docs/terminal-demo.svg" alt="Terminal demo: generating an AWS architecture diagram from a prompt" width="800">
 </div>
 
+<div align="center">
+
+[![Watch the demo on YouTube](https://img.youtube.com/vi/UdXDE5rEzTM/maxresdefault.jpg)](https://youtu.be/UdXDE5rEzTM)
+
+**[Watch the demo on YouTube](https://youtu.be/UdXDE5rEzTM)**
+
+</div>
+
 Works with any AI assistant: ChatGPT, Claude Projects, Kiro CLI, Claude Code, Cursor, or internal agents.
 
 ## The problem this solves
